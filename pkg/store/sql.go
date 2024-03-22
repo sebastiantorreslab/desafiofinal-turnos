@@ -2,37 +2,34 @@ package store
 
 import (
 	"database/sql"
+	"log"
+	"time"
 
-	"github.com/sebastiantorreslab/desafiofinal-turnos/internal/domain"
+	_ "github.com/go-sql-driver/mysql"
 )
 
+var StorageDB *sql.DB
+
 type SqlStore struct {
-	DB *sql.DB
+	StorageDB *sql.DB
 }
 
-func (s *SqlStore) Read() (*[]domain.Dentist, error) {
+func init() {
 
-	query := "SELECT * FROM dentists"
-	rows, err := s.DB.Query(query)
+	dataSource := "user-db:pass-db@tcp(localhost:3360)/clinic-db"
+
+	var err error
+	StorageDB, err = sql.Open("mysql", dataSource)
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
-	defer rows.Close()
-
-	var dentists []domain.Dentist
-
-	for rows.Next() {
-		var d domain.Dentist
-		err := rows.Scan(&d.ID, &d.License, &d.Name, &d.LastName)
-		if err != nil {
-			return nil, err
-
-		}
-		dentists = append(dentists, d)
+	if err = StorageDB.Ping(); err != nil {
+		panic(err)
 	}
-	if err := rows.Err(); err != nil {
+	StorageDB.SetConnMaxLifetime(time.Minute * 3)
+	StorageDB.SetMaxOpenConns(10)
+	StorageDB.SetMaxIdleConns(10)
 
-	}
+	log.Println("database initialized")
 
-	return &dentists, nil
 }
