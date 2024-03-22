@@ -5,8 +5,13 @@ import (
 	"github.com/sebastiantorreslab/desafiofinal-turnos/pkg/store"
 )
 
-type IRepository interface {
-	GetAll()
+type IDentistRepository interface {
+	GetById(id int) (*domain.Dentist, error)
+	GetAll() (*[]domain.Dentist, error)
+	Update(*domain.Dentist) error
+	UpdateByField(id int, field string) error
+	Delete(id int) error
+	Create(*domain.Dentist) error
 }
 
 type Repository struct {
@@ -15,7 +20,9 @@ type Repository struct {
 
 func (r *Repository) getAll() (*[]domain.Dentist, error) {
 
-	var dentists []domain.Dentist
-
-	return &dentists, nil
+	dentists, err := r.Store.GetAll()
+	if err != nil {
+		return nil, err
+	}
+	return dentists, nil
 }

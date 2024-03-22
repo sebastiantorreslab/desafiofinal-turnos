@@ -12,6 +12,27 @@ type SqlStore struct {
 
 func (s *SqlStore) Read() (*[]domain.Dentist, error) {
 
-	var dentist []domain.Dentist
-	return &dentist, nil
+	query := "SELECT * FROM dentists"
+	rows, err := s.DB.Query(query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var dentists []domain.Dentist
+
+	for rows.Next() {
+		var d domain.Dentist
+		err := rows.Scan(&d.ID, &d.License, &d.Name, &d.LastName)
+		if err != nil {
+			return nil, err
+
+		}
+		dentists = append(dentists, d)
+	}
+	if err := rows.Err(); err != nil {
+
+	}
+
+	return &dentists, nil
 }
