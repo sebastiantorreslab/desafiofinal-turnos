@@ -1,0 +1,14 @@
+version: "3.3"
+services:
+  mysql:
+    image: mysql:5.7
+    restart: on-failure
+    environment:
+      MYSQL_DATABASE: "clinic-db"
+      MYSQL_USER: "user-db"
+      MYSQL_PASSWORD: "pass-db"
+      MYSQL_ROOT_PASSWORD: "password"
+    ports:
+      - "3360:3306"
+    expose:
+      - "3306"
