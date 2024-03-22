@@ -1,4 +1,4 @@
 # desafiofinal-turnos
 
-**development commmits ovr develop branch
-** main branch for final delivery
+- development commits over **develop branch**
+- **main branch** for final delivery
