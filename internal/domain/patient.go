@@ -8,5 +8,5 @@ type Patient struct {
 	Name          string    `json:"name" binding:"required"`
 	LastName      string    `json:"last_name" binding:"required"`
 	Address       string    `json:"address" binding:"required"`
-	AdmissionHour time.Time `json:"admission_hour" binding:"required"`
+	AdmissionDate time.Time `json:"admission_date" binding:"required"`
 }
