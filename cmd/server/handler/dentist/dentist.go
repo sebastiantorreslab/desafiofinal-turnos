@@ -66,13 +66,13 @@ func (h *dentistHandler) Create() gin.HandlerFunc {
 
 		}
 
-		err = h.s.Create(req)
+		d, err := h.s.Create(req)
 		if err != nil {
 			web.Failure(c, 400, errors.New("Invalid"))
 			return
 
 		}
-		web.Success(c, 200, req)
+		web.Success(c, 200, d)
 
 	}
 

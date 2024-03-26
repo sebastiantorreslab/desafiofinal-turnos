@@ -10,7 +10,7 @@ type IDentistRepository interface {
 	GetAll() ([]domain.Dentist, error)
 	Update(dentist domain.Dentist, id int) (domain.Dentist, error)
 	Delete(id int) error
-	Create(dentist domain.Dentist) error
+	Create(dentist domain.Dentist) (domain.Dentist, error)
 }
 
 type dentistrepository struct {
@@ -42,7 +42,7 @@ func (r *dentistrepository) Delete(id int) error {
 	return nil
 
 }
-func (r *dentistrepository) Create(dentist domain.Dentist) error {
-	return nil
+func (r *dentistrepository) Create(dentist domain.Dentist) (domain.Dentist, error) {
+	return domain.Dentist{}, nil
 
 }
