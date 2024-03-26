@@ -65,18 +65,58 @@ func (s *sqlStore) GetAll() ([]domain.Dentist, error) {
 }
 
 func (s *sqlStore) GetById(id int) (domain.Dentist, error) {
-	return domain.Dentist{}, nil
+
+	var dentist domain.Dentist
+	query := "SELECT * FROM dentists WHERE id=?;"
+
+	stmt := s.db.QueryRow(query, id)
+
+	err := stmt.Scan(&dentist.ID, &dentist.License, &dentist.Name, &dentist.LastName)
+	if err != nil {
+		return domain.Dentist{}, err
+	}
+
+	return dentist, nil
 
 }
 func (s *sqlStore) Update(dentist domain.Dentist, id int) error {
+
+	query := "UPDATE dentists SET licence = ?, name = ? , last_name=? WHERE id =?;"
+	stmt, err := s.db.Prepare(query)
+	if err != nil {
+		return err
+	}
+
+	res, err := stmt.Exec(dentist.License, dentist.Name, dentist.LastName)
+	if err != nil {
+		return err
+	}
+
+	_, err = res.RowsAffected()
+	if err != nil {
+		return err
+	}
 	return nil
 
 }
-func (s *sqlStore) UpdateByField(id int, field string) error {
-	return nil
 
-}
 func (s *sqlStore) Delete(id int) error {
+
+	query := "DELETE FROM dentists WHERE id = ?;"
+
+	stmt, err := s.db.Prepare(query)
+	if err != nil {
+		return err
+	}
+	res, err := stmt.Exec(id)
+	if err != nil {
+		return err
+	}
+
+	_, err = res.RowsAffected()
+	if err != nil {
+		return err
+	}
 	return nil
 
 }
@@ -98,9 +138,4 @@ func (s *sqlStore) Create(dentist domain.Dentist) (domain.Dentist, error) {
 	}
 
 	return dentist, err
-}
-
-func (s *sqlStore) Exists(codeValue string) bool {
-	return false
-
 }

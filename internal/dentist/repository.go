@@ -32,7 +32,12 @@ func (r *dentistrepository) GetAll() ([]domain.Dentist, error) {
 
 func (r *dentistrepository) GetById(id int) (domain.Dentist, error) {
 
-	return domain.Dentist{}, nil
+	dentist, err := r.storage.GetById(id)
+	if err != nil {
+		return domain.Dentist{}, err
+	}
+
+	return dentist, nil
 }
 
 func (r *dentistrepository) Update(dentist domain.Dentist, id int) (domain.Dentist, error) {
