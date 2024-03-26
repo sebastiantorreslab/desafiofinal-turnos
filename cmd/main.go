@@ -27,8 +27,10 @@ func main() {
 	server := gin.Default()
 
 	server.GET("/ping", func(c *gin.Context) { c.String(200, "server OK") })
+
 	dentists := server.Group("/dentists")
 	{
+
 		dentists.GET("", dentistHandler.GetAll())
 		dentists.GET(":id", dentistHandler.GetById())
 		dentists.POST("", dentistHandler.Create())

@@ -66,6 +66,11 @@ func (s *denstistService) Update(dentist domain.Dentist, id int) (domain.Dentist
 		d.LastName = dentist.LastName
 	}
 
+	err = s.r.Update(d, id)
+	if err != nil {
+		return domain.Dentist{}, err
+	}
+
 	return d, nil
 
 }

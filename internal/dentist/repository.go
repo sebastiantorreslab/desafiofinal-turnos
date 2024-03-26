@@ -8,7 +8,7 @@ import (
 type IDentistRepository interface {
 	GetById(id int) (domain.Dentist, error)
 	GetAll() ([]domain.Dentist, error)
-	Update(dentist domain.Dentist, id int) (domain.Dentist, error)
+	Update(dentist domain.Dentist, id int) error
 	Delete(id int) error
 	Create(dentist domain.Dentist) (domain.Dentist, error)
 }
@@ -40,11 +40,26 @@ func (r *dentistrepository) GetById(id int) (domain.Dentist, error) {
 	return dentist, nil
 }
 
-func (r *dentistrepository) Update(dentist domain.Dentist, id int) (domain.Dentist, error) {
-	return domain.Dentist{}, nil
+func (r *dentistrepository) Update(dentist domain.Dentist, id int) error {
+
+	dentist, err := r.storage.GetById(id)
+	if err != nil {
+		return err
+	}
+	err = r.storage.Update(dentist, id)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (r *dentistrepository) Delete(id int) error {
+
+	err := r.storage.Delete(id)
+	if err != nil {
+		return err
+	}
+
 	return nil
 
 }
