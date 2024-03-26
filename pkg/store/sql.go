@@ -69,7 +69,7 @@ func (s *sqlStore) GetById(id int) (domain.Dentist, error) {
 	return domain.Dentist{}, nil
 
 }
-func (s *sqlStore) Update(dentist domain.Dentist) error {
+func (s *sqlStore) Update(dentist domain.Dentist, id int) error {
 	return nil
 
 }

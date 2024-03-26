@@ -7,11 +7,11 @@ import (
 type IDentistService interface {
 	GetById(id int) (domain.Dentist, error)
 	GetAll() ([]domain.Dentist, error)
-	Update(dentist domain.Dentist) error
-	UpdateByField(id int, field string) error
+	Update(dentist domain.Dentist, id int) (domain.Dentist, error)
+	UpdateByField(dentist domain.Dentist, id int) error
 	Delete(id int) error
 	Create(dentist domain.Dentist) error
-	Exists(codeValue string) bool
+
 }
 
 type denstistService struct {
@@ -35,10 +35,10 @@ func (s *denstistService) GetById(id int) (domain.Dentist, error) {
 	return domain.Dentist{}, nil
 }
 
-func (s *denstistService) Update(dentist domain.Dentist) error {
-	return nil
+func (s *denstistService) Update(dentist domain.Dentist, id int) (domain.Dentist, error) {
+	return domain.Dentist{}, nil
 }
-func (s *denstistService) UpdateByField(id int, field string) error {
+func (s *denstistService) UpdateByField(dentist domain.Dentist, id int) error {
 	return nil
 }
 func (s *denstistService) Delete(id int) error {
@@ -49,7 +49,4 @@ func (s *denstistService) Create(dentist domain.Dentist) error {
 	return nil
 
 }
-func (s *denstistService) Exists(codeValue string) bool {
-	return false
 
-}

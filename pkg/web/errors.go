@@ -6,10 +6,8 @@ type ErrorApi struct {
 	Message string `json:"message"`
 }
 
-
-func (e * ErrorApi) Error() string {
+func (e *ErrorApi) Error() string {
 	return e.Message
 }
 
 
-// errores personalizados

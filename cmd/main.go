@@ -30,6 +30,11 @@ func main() {
 	dentists := server.Group("/dentists")
 	{
 		dentists.GET("", dentistHandler.GetAll())
+		dentists.GET("/:id", dentistHandler.GetById())
+		dentists.POST("", dentistHandler.Create())
+		dentists.PUT("", dentistHandler.Update())
+		dentists.PATCH("", dentistHandler.UpdateByField())
+		dentists.DELETE("/:id", dentistHandler.Delete())
 
 	}
 
