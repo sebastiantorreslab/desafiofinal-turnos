@@ -18,7 +18,6 @@ func NewSqlStore(db *sql.DB) StoreInterface {
 
 }
 
-
 func ConnectDB() (*sql.DB, error) {
 
 	dataSource := "user-db:pass-db@tcp(localhost:3360)/clinic-db"
@@ -40,7 +39,7 @@ func ConnectDB() (*sql.DB, error) {
 
 func (s *sqlStore) GetAll() ([]domain.Dentist, error) {
 
-	query := "SELECT * FROM dentists"
+	query := "SELECT * FROM `clinic-db`.dentists"
 	rows, err := s.db.Query(query)
 	if err != nil {
 		return nil, err
@@ -81,22 +80,24 @@ func (s *sqlStore) Delete(id int) error {
 	return nil
 
 }
-func (s *sqlStore) Create(dentist domain.Dentist) error {
-	query := "INSERT INTO dentists(license,name,last_name) values (?,?,?)"
+func (s *sqlStore) Create(dentist domain.Dentist) (domain.Dentist, error) {
+	query := "INSERT INTO dentists (license, name, last_name) VALUES (?, ?, ?);"
 	stmt, err := s.db.Prepare(query)
 	if err != nil {
-		return err
+		return domain.Dentist{}, err
 	}
+	defer stmt.Close()
+
 	res, err := stmt.Exec(dentist.License, dentist.Name, dentist.LastName)
 	if err != nil {
-		return err
+		return domain.Dentist{}, err
 	}
 	_, err = res.RowsAffected()
 	if err != nil {
-		return err
+		return domain.Dentist{}, err
 	}
 
-	return nil
+	return dentist, err
 }
 
 func (s *sqlStore) Exists(codeValue string) bool {

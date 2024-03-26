@@ -10,6 +10,5 @@ type StoreInterface interface {
 	Update(dentist domain.Dentist, id int) error
 	UpdateByField(id int, field string) error
 	Delete(id int) error
-	Create(dentist domain.Dentist) error
-	Exists(codeValue string) bool
+	Create(dentist domain.Dentist) (domain.Dentist, error)
 }

@@ -31,6 +31,7 @@ func (r *dentistrepository) GetAll() ([]domain.Dentist, error) {
 }
 
 func (r *dentistrepository) GetById(id int) (domain.Dentist, error) {
+
 	return domain.Dentist{}, nil
 }
 
@@ -43,6 +44,12 @@ func (r *dentistrepository) Delete(id int) error {
 
 }
 func (r *dentistrepository) Create(dentist domain.Dentist) (domain.Dentist, error) {
-	return domain.Dentist{}, nil
+
+	_, err := r.storage.Create(dentist)
+	if err != nil {
+		return domain.Dentist{}, err
+	}
+
+	return dentist, nil
 
 }
