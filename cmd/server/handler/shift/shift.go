@@ -93,14 +93,14 @@ func (h *ShiftHandler) Update() gin.HandlerFunc {
 			return
 		}
 
-		err = h.s.Update(req, id)
+		s, err := h.s.Update(req, id)
 		if err != nil {
 			web.Failure(c, 500, errors.New("Internal server error"))
 			return
 		}
 
 		web.Success(c, http.StatusOK, gin.H{
-			"data": "shift updated",
+			"data": s,
 		})
 
 	}
@@ -144,13 +144,13 @@ func (h *ShiftHandler) UpdateByField() gin.HandlerFunc {
 			IdDentist: req.IdDentist,
 		}
 
-		err = h.s.Update(update, id)
+		s, err := h.s.Update(update, id)
 		if err != nil {
 			web.Failure(c, 404, errors.New("Invalid request getById"))
 			return
 		}
 		web.Success(c, http.StatusOK, gin.H{
-			"data": "fields updated",
+			"data": s,
 		})
 
 	}

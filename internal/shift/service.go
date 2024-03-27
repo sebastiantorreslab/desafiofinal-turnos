@@ -9,8 +9,8 @@ import (
 type IShiftService interface {
 	GetById(id int) (domain.Shift, error)
 	GetAll() ([]domain.Shift, error)
-	Update(shift domain.Shift, id int) error
-	UpdateByField(shift domain.Shift, id int) error
+	Update(shift domain.Shift, id int) (domain.Shift, error)
+	UpdateByField(shift domain.Shift, id int) (domain.Shift, error)
 	Delete(id int) error
 	Create(shift domain.Shift) (domain.Shift, error)
 }
@@ -41,7 +41,7 @@ func (s *shiftService) GetAll() ([]domain.Shift, error) {
 	}
 	return shifts, nil
 }
-func (s *shiftService) Update(shift domain.Shift, id int) error {
+func (s *shiftService) Update(shift domain.Shift, id int) (domain.Shift, error) {
 
 	currentShift, err := s.r.GetById(id)
 	if err != nil {
@@ -67,14 +67,14 @@ func (s *shiftService) Update(shift domain.Shift, id int) error {
 
 	err = s.r.Update(currentShift, id)
 	if err != nil {
-		return err
+		return domain.Shift{}, err
 	}
 
-	return nil
+	return currentShift, nil
 
 }
 
-func (s *shiftService) UpdateByField(shift domain.Shift, id int) error {
+func (s *shiftService) UpdateByField(shift domain.Shift, id int) (domain.Shift, error) {
 
 	currentShift, err := s.r.GetById(id)
 	if err != nil {
@@ -100,9 +100,9 @@ func (s *shiftService) UpdateByField(shift domain.Shift, id int) error {
 
 	err = s.r.Update(currentShift, id)
 	if err != nil {
-		return err
+		return domain.Shift{}, err
 	}
-	return nil
+	return currentShift, nil
 }
 
 func (s *shiftService) Delete(id int) error {

@@ -131,11 +131,6 @@ func (h *dentistHandler) UpdateByField() gin.HandlerFunc {
 			web.Failure(c, 400, errors.New("Invalid param"))
 			return
 		}
-		_, err = h.s.GetById(id)
-		if err != nil {
-			web.Failure(c, 404, errors.New("product not found"))
-			return
-		}
 
 		if err := c.ShouldBindJSON(&req); err != nil {
 			web.Failure(c, 400, errors.New("invalid json"))

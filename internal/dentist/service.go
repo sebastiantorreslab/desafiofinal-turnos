@@ -10,7 +10,7 @@ type IDentistService interface {
 	GetById(id int) (domain.Dentist, error)
 	GetAll() ([]domain.Dentist, error)
 	Update(dentist domain.Dentist, id int) (domain.Dentist, error)
-	UpdateByField(dentist domain.Dentist, id int) error
+	UpdateByField(dentist domain.Dentist, id int) (domain.Dentist, error)
 	Delete(id int) error
 	Create(dentist domain.Dentist) (domain.Dentist, error)
 }
@@ -76,11 +76,11 @@ func (s *denstistService) Update(dentist domain.Dentist, id int) (domain.Dentist
 	return currentDentist, nil
 
 }
-func (s *denstistService) UpdateByField(dentist domain.Dentist, id int) error {
+func (s *denstistService) UpdateByField(dentist domain.Dentist, id int) (domain.Dentist, error) {
 
 	currentDentist, err := s.r.GetById(id)
 	if err != nil {
-		return err
+		return domain.Dentist{}, err
 	}
 	if dentist.License != "" {
 		currentDentist.License = dentist.License
@@ -96,7 +96,7 @@ func (s *denstistService) UpdateByField(dentist domain.Dentist, id int) error {
 	if err != nil {
 		log.Fatal(err)
 	}
-	return nil
+	return currentDentist, nil
 
 }
 func (s *denstistService) Delete(id int) error {
