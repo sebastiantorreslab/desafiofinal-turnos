@@ -21,6 +21,17 @@ func NewPatientRepository(storage store.StorePatientInterface) IPatientRepositor
 	return &patientRepository{storage}
 }
 
+func (r *patientRepository) Create(patient domain.Patient) (domain.Patient, error) {
+
+	_, err := r.storage.CreatePatient(patient)
+	if err != nil {
+		return domain.Patient{}, err
+	}
+
+	return patient, nil
+
+}
+
 func (r *patientRepository) GetAll() ([]domain.Patient, error) {
 
 	patients, err := r.storage.GetAllPatient()
