@@ -92,7 +92,7 @@ func (s *denstistService) UpdateByField(dentist domain.Dentist, id int) error {
 		currentDentist.LastName = dentist.LastName
 	}
 
-	err := s.r.Update(currentDentist, id)
+	err = s.r.Update(currentDentist, id)
 	if err != nil {
 		log.Fatal(err)
 	}
