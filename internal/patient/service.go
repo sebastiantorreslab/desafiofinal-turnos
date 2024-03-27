@@ -31,3 +31,12 @@ func (s *patientService) Create(patient domain.Patient) (domain.Patient, error) 
 	return d, nil
 
 }
+
+func (s *patientService) GetAll() ([]domain.Patient, error) {
+
+	patients, err := s.r.GetAll()
+	if err != nil {
+		return nil, err
+	}
+	return patients, nil
+}
