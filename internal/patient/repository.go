@@ -20,3 +20,12 @@ type patientRepository struct {
 func NewPatientRepository(storage store.StorePatientInterface) IPatientRepository {
 	return &patientRepository{storage}
 }
+
+func (r *patientRepository) GetAll() ([]domain.Patient, error) {
+
+	patients, err := r.storage.GetAll()
+	if err != nil {
+		return nil, err
+	}
+	return patients, nil
+}
