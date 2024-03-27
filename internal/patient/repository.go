@@ -23,9 +23,19 @@ func NewPatientRepository(storage store.StorePatientInterface) IPatientRepositor
 
 func (r *patientRepository) GetAll() ([]domain.Patient, error) {
 
-	patients, err := r.storage.GetAll()
+	patients, err := r.storage.GetAllPatient()
 	if err != nil {
 		return nil, err
 	}
 	return patients, nil
+}
+
+func (r *patientRepository) GetById(id int) (domain.Patient, error) {
+
+	patient, err := r.storage.GetByIdPatient(id)
+	if err != nil {
+		return domain.Patient{}, err
+	}
+
+	return patient, nil
 }
