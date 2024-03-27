@@ -52,3 +52,14 @@ func (r *patientRepository) Update(patient domain.Patient, id int) error {
 	}
 	return nil
 }
+
+func (r *patientRepository) Delete(id int) error {
+
+	err := r.storage.DeletePatient(id)
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+}
