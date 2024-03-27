@@ -24,7 +24,7 @@ func (s *sqlShiftStore) GetById(id int) (domain.Shift, error) {
 
 	stmt := s.db.QueryRow(query, id)
 
-	err := stmt.Scan(&shift.ID, &shift.Patient, &shift.Dentist, &shift.ShiftHour, &shift.ShiftDate)
+	err := stmt.Scan(&shift.ID, &shift.IdPatient, &shift.IdDentist, &shift.ShiftHour, &shift.ShiftDate)
 	if err != nil {
 		return domain.Shift{}, err
 	}
@@ -45,7 +45,7 @@ func (s *sqlShiftStore) GetAll() ([]domain.Shift, error) {
 
 	for rows.Next() {
 		var shift domain.Shift
-		err := rows.Scan(&shift.ID, &shift.Patient, &shift.Dentist, &shift.ShiftHour, &shift.ShiftDate)
+		err := rows.Scan(&shift.ID, &shift.IdPatient, &shift.IdDentist, &shift.ShiftHour, &shift.ShiftDate)
 		if err != nil {
 			return nil, err
 
@@ -67,7 +67,7 @@ func (s *sqlShiftStore) Update(shift domain.Shift, id int) error {
 		return err
 	}
 
-	res, err := stmt.Exec(shift.ShiftDate, shift.ShiftHour, shift.Patient.ID, shift.Dentist.ID, id)
+	res, err := stmt.Exec(shift.ShiftDate, shift.ShiftHour, shift.IdPatient, shift.IdDentist, id)
 	if err != nil {
 		return err
 	}
@@ -108,7 +108,7 @@ func (s *sqlShiftStore) Create(shift domain.Shift) (domain.Shift, error) {
 	}
 	defer stmt.Close()
 
-	res, err := stmt.Exec(shift.ShiftDate, shift.ShiftHour, shift.Patient.ID, shift.Dentist.ID)
+	res, err := stmt.Exec(shift.ShiftDate, shift.ShiftHour, shift.IdPatient, shift.IdDentist)
 	if err != nil {
 		return domain.Shift{}, err
 	}

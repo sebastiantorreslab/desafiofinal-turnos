@@ -17,7 +17,7 @@ type denstistService struct {
 	r IDentistRepository
 }
 
-func NewService(r IDentistRepository) IDentistService {
+func NewDentistService(r IDentistRepository) IDentistService {
 	return &denstistService{r}
 }
 

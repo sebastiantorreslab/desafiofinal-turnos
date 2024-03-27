@@ -4,7 +4,6 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sebastiantorreslab/desafiofinal-turnos/internal/domain"
@@ -111,11 +110,11 @@ func (h *shiftHandler) Update() gin.HandlerFunc {
 }
 func (h *shiftHandler) UpdateByField() gin.HandlerFunc {
 	type Request struct {
-		ID        int            `json:"ID"`
-		Patient   domain.Patient `json:"patient" binding:"required,omitempty"`
-		Dentist   domain.Dentist `json:"dentist" binding:"required,omitempty"`
-		ShiftHour time.Time      `json:"shift_hour" binding:"required,omitempty"`
-		ShiftDate time.Time      `json:"shift_date" binding:"required,omitempty"`
+		ID        int    `json:"ID"`
+		IdPatient int    `json:"patient" binding:"required,omitempty"`
+		IdDentist int    `json:"dentist" binding:"required,omitempty"`
+		ShiftHour string `json:"shift_hour" binding:"required,omitempty"`
+		ShiftDate string `json:"shift_date" binding:"required,omitempty"`
 	}
 	return func(c *gin.Context) {
 
@@ -146,8 +145,8 @@ func (h *shiftHandler) UpdateByField() gin.HandlerFunc {
 			return
 		}
 		update := domain.Shift{
-			Patient:   req.Patient,
-			Dentist:   req.Dentist,
+			IdPatient: req.IdPatient,
+			IdDentist: req.IdDentist,
 			ShiftHour: req.ShiftHour,
 			ShiftDate: req.ShiftDate,
 		}
