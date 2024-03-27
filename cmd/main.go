@@ -21,7 +21,7 @@ func main() {
 
 	defer db.Close()
 
-	storage := store.NewSqlStore(db)
+	storage := store.NewSqlDentistStore(db)
 	repository := dentist.NewRepository(storage)
 	service := dentist.NewService(repository)
 	dentistHandler := handlerDentist.NewDentistHandler(service)

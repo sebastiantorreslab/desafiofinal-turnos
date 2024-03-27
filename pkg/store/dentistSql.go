@@ -7,37 +7,18 @@ import (
 	"github.com/sebastiantorreslab/desafiofinal-turnos/internal/domain"
 )
 
-type sqlStore struct {
+type sqlDentistStore struct {
 	db *sql.DB
 }
 
-func NewSqlStore(db *sql.DB) StoreDentistInterface {
-	return &sqlStore{
+func NewSqlDentistStore(db *sql.DB) StoreDentistInterface {
+	return &sqlDentistStore{
 		db: db,
 	}
 
 }
 
-func ConnectDB() (*sql.DB, error) {
-
-	dataSource := "user-db:pass-db@tcp(localhost:3360)/clinic-db"
-
-	db, err := sql.Open("mysql", dataSource)
-
-	if err != nil {
-		panic(err)
-	}
-
-	err = db.Ping()
-
-	if err != nil {
-		panic(err)
-	}
-
-	return db, nil
-}
-
-func (s *sqlStore) GetAll() ([]domain.Dentist, error) {
+func (s *sqlDentistStore) GetAll() ([]domain.Dentist, error) {
 
 	query := "SELECT * FROM `clinic-db`.dentists"
 	rows, err := s.db.Query(query)
@@ -64,7 +45,7 @@ func (s *sqlStore) GetAll() ([]domain.Dentist, error) {
 	return dentists, nil
 }
 
-func (s *sqlStore) GetById(id int) (domain.Dentist, error) {
+func (s *sqlDentistStore) GetById(id int) (domain.Dentist, error) {
 
 	var dentist domain.Dentist
 	query := "SELECT * FROM dentists WHERE id=?;"
@@ -79,7 +60,7 @@ func (s *sqlStore) GetById(id int) (domain.Dentist, error) {
 	return dentist, nil
 
 }
-func (s *sqlStore) Update(dentist domain.Dentist, id int) error {
+func (s *sqlDentistStore) Update(dentist domain.Dentist, id int) error {
 
 	query := "UPDATE dentists SET license = ?, name = ? , last_name=? WHERE id=?;"
 	stmt, err := s.db.Prepare(query)
@@ -100,7 +81,7 @@ func (s *sqlStore) Update(dentist domain.Dentist, id int) error {
 
 }
 
-func (s *sqlStore) Delete(id int) error {
+func (s *sqlDentistStore) Delete(id int) error {
 
 	query := "DELETE FROM dentists WHERE id = ?;"
 
@@ -120,7 +101,7 @@ func (s *sqlStore) Delete(id int) error {
 	return nil
 
 }
-func (s *sqlStore) Create(dentist domain.Dentist) (domain.Dentist, error) {
+func (s *sqlDentistStore) Create(dentist domain.Dentist) (domain.Dentist, error) {
 	query := "INSERT INTO dentists (license, name, last_name) VALUES (?, ?, ?);"
 	stmt, err := s.db.Prepare(query)
 	if err != nil {
@@ -137,5 +118,5 @@ func (s *sqlStore) Create(dentist domain.Dentist) (domain.Dentist, error) {
 		return domain.Dentist{}, err
 	}
 
-	return dentist, err
+	return dentist, nil
 }
