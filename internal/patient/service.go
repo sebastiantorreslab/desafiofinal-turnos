@@ -40,3 +40,12 @@ func (s *patientService) GetAll() ([]domain.Patient, error) {
 	}
 	return patients, nil
 }
+
+func (s *patientService) GetById(id int) (domain.Patient, error) {
+
+	d, err := s.r.GetById(id)
+	if err != nil {
+		return domain.Patient{}, err
+	}
+	return d, nil
+}
