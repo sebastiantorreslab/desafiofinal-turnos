@@ -13,9 +13,9 @@ type StoreDentistInterface interface {
 }
 
 type StorePatientInterface interface {
-	GetById(id int) (domain.Patient, error)
-	GetAll() ([]domain.Patient, error)
-	Update(patient domain.Patient, id int) error
-	Delete(id int) error
-	Create(patient domain.Patient) (domain.Patient, error)
+	GetByIdPatient(id int) (domain.Patient, error)
+	GetAllPatient() ([]domain.Patient, error)
+	UpdatePatient(patient domain.Patient, id int) error
+	DeletePatient(id int) error
+	CreatePatient(patient domain.Patient) (domain.Patient, error)
 }
