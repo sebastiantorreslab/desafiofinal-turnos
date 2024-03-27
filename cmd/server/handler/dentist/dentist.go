@@ -1,4 +1,4 @@
-package handler
+package dentist
 
 import (
 	"errors"
@@ -23,14 +23,13 @@ func NewDentistHandler(s dentist.IDentistService) *dentistHandler {
 
 func (h *dentistHandler) GetAll() gin.HandlerFunc {
 
-	dentist, err := h.s.GetAll()
-
 	return func(c *gin.Context) {
+		dentists, err := h.s.GetAll()
 		if err != nil {
 			web.Failure(c, 400, errors.New("Invalid"))
 			return
 		}
-		web.Success(c, 200, dentist)
+		web.Success(c, 200, dentists)
 	}
 }
 
@@ -82,11 +81,10 @@ func (h *dentistHandler) Update() gin.HandlerFunc {
 
 		var req domain.Dentist
 		err := c.Bind(&req)
-		
+
 		if err != nil {
 			web.Failure(c, 400, errors.New("Bad request"))
 			return
-
 		}
 
 		id, err := strconv.Atoi(c.Param("id"))

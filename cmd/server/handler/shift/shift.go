@@ -1,4 +1,4 @@
-package handler
+package shift
 
 import (
 	"errors"
@@ -24,9 +24,8 @@ func NewShiftHandler(s shift.IShiftService) *ShiftHandler {
 
 func (h *ShiftHandler) GetAll() gin.HandlerFunc {
 
-	shifts, err := h.s.GetAll()
-
 	return func(c *gin.Context) {
+		shifts, err := h.s.GetAll()
 		if err != nil {
 			web.Failure(c, 400, errors.New("Invalid"))
 			return
@@ -86,7 +85,6 @@ func (h *ShiftHandler) Update() gin.HandlerFunc {
 		if err != nil {
 			web.Failure(c, 400, errors.New("Bad request"))
 			return
-
 		}
 
 		id, err := strconv.Atoi(c.Param("id"))
@@ -111,10 +109,10 @@ func (h *ShiftHandler) Update() gin.HandlerFunc {
 func (h *ShiftHandler) UpdateByField() gin.HandlerFunc {
 	type Request struct {
 		ID        int    `json:"ID"`
-		IdPatient int    `json:"patient" binding:"required,omitempty"`
-		IdDentist int    `json:"dentist" binding:"required,omitempty"`
-		ShiftHour string `json:"shift_hour" binding:"required,omitempty"`
 		ShiftDate string `json:"shift_date" binding:"required,omitempty"`
+		ShiftHour string `json:"shift_hour" binding:"required,omitempty"`
+		IdPatient int    `json:"id_patient" binding:"required,omitempty"`
+		IdDentist int    `json:"id_dentist" binding:"required,omitempty"`
 	}
 	return func(c *gin.Context) {
 
@@ -134,26 +132,21 @@ func (h *ShiftHandler) UpdateByField() gin.HandlerFunc {
 			web.Failure(c, 400, errors.New("Invalid param"))
 			return
 		}
-		_, err = h.s.GetById(id)
-		if err != nil {
-			web.Failure(c, 404, errors.New("product not found"))
-			return
-		}
 
 		if err := c.ShouldBindJSON(&req); err != nil {
 			web.Failure(c, 400, errors.New("invalid json"))
 			return
 		}
 		update := domain.Shift{
-			ShiftHour: req.ShiftHour,
 			ShiftDate: req.ShiftDate,
+			ShiftHour: req.ShiftHour,
 			IdPatient: req.IdPatient,
 			IdDentist: req.IdDentist,
 		}
 
 		err = h.s.Update(update, id)
 		if err != nil {
-			web.Failure(c, 404, errors.New("Invalid reques getById"))
+			web.Failure(c, 404, errors.New("Invalid request getById"))
 			return
 		}
 		web.Success(c, http.StatusOK, gin.H{
@@ -179,7 +172,7 @@ func (h *ShiftHandler) Delete() gin.HandlerFunc {
 		}
 
 		web.Success(c, http.StatusOK, gin.H{
-			"message": "dentist deleted",
+			"message": "shift deleted",
 		})
 
 	}

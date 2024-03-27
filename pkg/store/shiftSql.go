@@ -24,12 +24,12 @@ func (s *sqlShiftStore) GetById(id int) (domain.Shift, error) {
 
 	stmt := s.db.QueryRow(query, id)
 
-	err := stmt.Scan(&shift.ID, &shift.IdPatient, &shift.IdDentist, &shift.ShiftHour, &shift.ShiftDate)
+	err := stmt.Scan(&shift.ID, &shift.ShiftDate, &shift.ShiftHour, &shift.IdPatient, &shift.IdDentist)
 	if err != nil {
 		return domain.Shift{}, err
 	}
 
-	return domain.Shift{}, nil
+	return shift, nil
 
 }
 func (s *sqlShiftStore) GetAllShifts() ([]domain.Shift, error) {
@@ -101,14 +101,14 @@ func (s *sqlShiftStore) Delete(id int) error {
 }
 func (s *sqlShiftStore) Create(shift domain.Shift) (domain.Shift, error) {
 
-	query := "INSERT INTO shift (ID, shift_date, shift_hour, id_patient,id_dentist) VALUES (?,?, ?, ?, ?)"
+	query := "INSERT INTO shift ( shift_date, shift_hour, id_patient,id_dentist) VALUES (?, ?, ?, ?)"
 	stmt, err := s.db.Prepare(query)
 	if err != nil {
 		return domain.Shift{}, err
 	}
 	defer stmt.Close()
 
-	res, err := stmt.Exec(shift.ID, shift.ShiftDate, shift.ShiftHour, shift.IdPatient, shift.IdDentist)
+	res, err := stmt.Exec(shift.ShiftDate, shift.ShiftHour, shift.IdPatient, shift.IdDentist)
 	if err != nil {
 		return domain.Shift{}, err
 	}
