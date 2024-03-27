@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/sebastiantorreslab/desafiofinal-turnos/internal/domain"
 	"github.com/sebastiantorreslab/desafiofinal-turnos/internal/patient"
 	"github.com/sebastiantorreslab/desafiofinal-turnos/pkg/web"
 )
@@ -47,6 +48,30 @@ func (h *patientHandler) GetById() gin.HandlerFunc {
 			return
 		}
 		web.Success(c, 200, patient)
+	}
+
+}
+
+func (h *patientHandler) Create() gin.HandlerFunc {
+
+	return func(c *gin.Context) {
+
+		var req domain.Patient
+		err := c.Bind(&req)
+		if err != nil {
+			web.Failure(c, 400, errors.New("Bad request"))
+			return
+
+		}
+
+		d, err := h.s.Create(req)
+		if err != nil {
+			web.Failure(c, 400, errors.New("Invalid"))
+			return
+
+		}
+		web.Success(c, 200, d)
+
 	}
 
 }
