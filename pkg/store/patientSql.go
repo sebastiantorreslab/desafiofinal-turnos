@@ -100,3 +100,23 @@ func (s *sqlStorePatient) UpdatePatient(patient domain.Patient, id int) error {
 	return nil
 
 }
+func (s *sqlStorePatient) DeletePatient(id int) error {
+
+	query := "DELETE FROM patients WHERE id = ?;"
+
+	stmt, err := s.db.Prepare(query)
+	if err != nil {
+		return err
+	}
+	res, err := stmt.Exec(id)
+	if err != nil {
+		return err
+	}
+
+	_, err = res.RowsAffected()
+	if err != nil {
+		return err
+	}
+	return nil
+
+}
