@@ -2,6 +2,7 @@ package patient
 
 import (
 	"errors"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sebastiantorreslab/desafiofinal-turnos/internal/patient"
@@ -29,4 +30,23 @@ func (h *patientHandler) GetAll() gin.HandlerFunc {
 		}
 		web.Success(c, 200, patient)
 	}
+}
+
+func (h *patientHandler) GetById() gin.HandlerFunc {
+
+	return func(c *gin.Context) {
+		id, err := strconv.Atoi(c.Param("id"))
+		if err != nil {
+			web.Failure(c, 400, errors.New("Invalid id"))
+			return
+		}
+
+		patient, err := h.s.GetById(id)
+		if err != nil {
+			web.Failure(c, 400, errors.New("Invalid"))
+			return
+		}
+		web.Success(c, 200, patient)
+	}
+
 }
