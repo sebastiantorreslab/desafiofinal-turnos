@@ -54,7 +54,7 @@ func (s *sqlStorePatient) GetByIdPatient(id int) (domain.Patient, error) {
 }
 func (s *sqlStorePatient) GetAllPatient() ([]domain.Patient, error) {
 
-	query := "SELECT * FROM `clinic-db`.patients"
+	query := "SELECT * FROM patients"
 	rows, err := s.db.Query(query)
 	if err != nil {
 		return nil, err
