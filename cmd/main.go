@@ -26,21 +26,18 @@ func main() {
 	serviceDentist := dentist.NewDentistService(repositoryDentist)
 	dentistHandler := handlerDentist.NewDentistHandler(serviceDentist)
 
-	server := gin.Default()
+	server := gin.New()
 
 	server.GET("/ping", func(c *gin.Context) { c.String(200, "server OK") })
 
 	dentists := server.Group("/dentists")
-	{
 
-		dentists.GET("", dentistHandler.GetAll())
-		dentists.GET(":id", dentistHandler.GetById())
-		dentists.POST("", dentistHandler.Create())
-		dentists.PUT(":id", dentistHandler.Update())
-		dentists.PATCH(":id", dentistHandler.UpdateByField())
-		dentists.DELETE(":id", dentistHandler.Delete())
-
-	}
+	dentists.GET("", dentistHandler.GetAll())
+	dentists.GET(":id", dentistHandler.GetById())
+	dentists.POST("", dentistHandler.Create())
+	dentists.PUT(":id", dentistHandler.Update())
+	dentists.PATCH(":id", dentistHandler.UpdateByField())
+	dentists.DELETE(":id", dentistHandler.Delete())
 
 	storageShift := store.NewSqlShiftStore(db)
 	repositoryShift := shift.NewShiftRepository(storageShift)
@@ -48,18 +45,13 @@ func main() {
 	shiftHandler := handlerShift.NewShiftHandler(serviceShift)
 
 	shifts := server.Group("/shifts")
-	{
 
-		shifts.GET("", shiftHandler.GetAll())
-		shifts.GET(":id", shiftHandler.GetById())
-		shifts.POST("", shiftHandler.Create())
-		shifts.PUT(":id", shiftHandler.Update())
-		shifts.PATCH(":id", shiftHandler.UpdateByField())
-		shifts.DELETE(":id", shiftHandler.Delete())
-
-	}
-
-	
+	shifts.GET("", shiftHandler.GetAll())
+	shifts.GET(":id", shiftHandler.GetById())
+	shifts.POST("", shiftHandler.Create())
+	shifts.PUT(":id", shiftHandler.Update())
+	shifts.PATCH(":id", shiftHandler.UpdateByField())
+	shifts.DELETE(":id", shiftHandler.Delete())
 
 	server.Run(":8080")
 }

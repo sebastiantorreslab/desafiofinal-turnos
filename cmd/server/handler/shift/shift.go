@@ -11,17 +11,17 @@ import (
 	"github.com/sebastiantorreslab/desafiofinal-turnos/pkg/web"
 )
 
-type shiftHandler struct {
+type ShiftHandler struct {
 	s shift.IShiftService
 }
 
-func NewShiftHandler(s shift.IShiftService) *shiftHandler {
-	return &shiftHandler{
+func NewShiftHandler(s shift.IShiftService) *ShiftHandler {
+	return &ShiftHandler{
 		s: s,
 	}
 }
 
-func (h *shiftHandler) GetAll() gin.HandlerFunc {
+func (h *ShiftHandler) GetAll() gin.HandlerFunc {
 
 	shifts, err := h.s.GetAll()
 
@@ -34,7 +34,7 @@ func (h *shiftHandler) GetAll() gin.HandlerFunc {
 	}
 }
 
-func (h *shiftHandler) GetById() gin.HandlerFunc {
+func (h *ShiftHandler) GetById() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 		id, err := strconv.Atoi(c.Param("id"))
@@ -53,7 +53,7 @@ func (h *shiftHandler) GetById() gin.HandlerFunc {
 
 }
 
-func (h *shiftHandler) Create() gin.HandlerFunc {
+func (h *ShiftHandler) Create() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 
@@ -67,7 +67,7 @@ func (h *shiftHandler) Create() gin.HandlerFunc {
 
 		s, err := h.s.Create(req)
 		if err != nil {
-			web.Failure(c, 400, errors.New("Invalid"))
+			web.Failure(c, 400, errors.New("Invalid creation of shift"))
 			return
 
 		}
@@ -77,7 +77,7 @@ func (h *shiftHandler) Create() gin.HandlerFunc {
 
 }
 
-func (h *shiftHandler) Update() gin.HandlerFunc {
+func (h *ShiftHandler) Update() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 		var req domain.Shift
@@ -108,7 +108,7 @@ func (h *shiftHandler) Update() gin.HandlerFunc {
 	}
 
 }
-func (h *shiftHandler) UpdateByField() gin.HandlerFunc {
+func (h *ShiftHandler) UpdateByField() gin.HandlerFunc {
 	type Request struct {
 		ID        int    `json:"ID"`
 		IdPatient int    `json:"patient" binding:"required,omitempty"`
@@ -163,7 +163,7 @@ func (h *shiftHandler) UpdateByField() gin.HandlerFunc {
 	}
 }
 
-func (h *shiftHandler) Delete() gin.HandlerFunc {
+func (h *ShiftHandler) Delete() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 		id, err := strconv.Atoi(c.Param("id"))

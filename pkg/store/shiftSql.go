@@ -101,7 +101,7 @@ func (s *sqlShiftStore) Delete(id int) error {
 }
 func (s *sqlShiftStore) Create(shift domain.Shift) (domain.Shift, error) {
 
-	query := "INSERT INTO shift (shift_date, shift_hour, id_patient,id_dentist) VALUES (?, ?, ?,?);"
+	query := "INSERT INTO shift (shift_date, shift_hour, id_patient,id_dentist) VALUES (?, ?, ?, ?)"
 	stmt, err := s.db.Prepare(query)
 	if err != nil {
 		return domain.Shift{}, err
