@@ -8,6 +8,7 @@ import (
 
 type IShiftService interface {
 	GetById(id int) (domain.Shift, error)
+	GetByDNI(dni int) (domain.Shift, error)
 	GetAll() ([]domain.Shift, error)
 	Update(shift domain.Shift, id int) (domain.Shift, error)
 	UpdateByField(shift domain.Shift, id int) (domain.Shift, error)
@@ -64,6 +65,10 @@ func (s *shiftService) Update(shift domain.Shift, id int) (domain.Shift, error) 
 		currentShift.IdDentist = shift.IdDentist
 
 	}
+	if shift.PatientDNI != 0 {
+		currentShift.PatientDNI = shift.PatientDNI
+
+	}
 
 	err = s.r.Update(currentShift, id)
 	if err != nil {
@@ -97,6 +102,10 @@ func (s *shiftService) UpdateByField(shift domain.Shift, id int) (domain.Shift, 
 		currentShift.IdDentist = shift.IdDentist
 
 	}
+	if shift.PatientDNI != 0 {
+		currentShift.PatientDNI = shift.PatientDNI
+
+	}
 
 	err = s.r.Update(currentShift, id)
 	if err != nil {
@@ -119,6 +128,17 @@ func (s *shiftService) Delete(id int) error {
 func (s *shiftService) Create(shift domain.Shift) (domain.Shift, error) {
 
 	shift, err := s.r.Create(shift)
+	if err != nil {
+		return domain.Shift{}, err
+	}
+
+	return shift, nil
+
+}
+
+func (s *shiftService) GetByDNI(dni int) (domain.Shift, error) {
+
+	shift, err := s.r.GetByDNI(dni)
 	if err != nil {
 		return domain.Shift{}, err
 	}

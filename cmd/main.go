@@ -63,6 +63,7 @@ func main() {
 
 	shifts.GET("", shiftHandler.GetAll())
 	shifts.GET(":id", shiftHandler.GetById())
+	shifts.GET("/dni", shiftHandler.GetByDNI())
 	shifts.POST("", middleware.Authentication(), shiftHandler.Create())
 	shifts.PUT(":id", middleware.Authentication(), shiftHandler.Update())
 	shifts.PATCH(":id", middleware.Authentication(), shiftHandler.UpdateByField())

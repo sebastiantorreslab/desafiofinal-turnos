@@ -22,6 +22,7 @@ type StorePatientInterface interface {
 
 type StoreShiftInterface interface {
 	GetById(id int) (domain.Shift, error)
+	GetByDNI(dni int) (domain.Shift, error)
 	GetAllShifts() ([]domain.Shift, error)
 	Update(shift domain.Shift, id int) error
 	Delete(id int) error
