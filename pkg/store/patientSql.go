@@ -52,3 +52,29 @@ func (s *sqlStorePatient) GetByIdPatient(id int) (domain.Patient, error) {
 	return patient, nil
 
 }
+func (s *sqlStorePatient) GetAllPatient() ([]domain.Patient, error) {
+
+	query := "SELECT * FROM `clinic-db`.patients"
+	rows, err := s.db.Query(query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var patients []domain.Patient
+
+	for rows.Next() {
+		var d domain.Patient
+		err := rows.Scan(&d.ID, &d.DNI, &d.Name, &d.LastName, &d.Address, &d.AdmissionDate)
+		if err != nil {
+			return nil, err
+
+		}
+		patients = append(patients, d)
+	}
+	if err := rows.Err(); err != nil {
+
+	}
+
+	return patients, nil
+}
