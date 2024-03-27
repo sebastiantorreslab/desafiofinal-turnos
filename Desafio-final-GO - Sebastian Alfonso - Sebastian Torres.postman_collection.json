@@ -166,7 +166,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"dni\": 12345678,\r\n  \"name\": \"Pedro\",\r\n  \"last_name\": \"PicaPiedra\",\r\n  \"address\": \"Calle siempre viva 123\",\r\n  \"admission_date\": \"2024-03-28\"\r\n}\r\n\r\n",
+							"raw": "{\r\n  \"dni\": 12345678,\r\n  \"name\": \"Juan\",\r\n  \"last_name\": \"PicaPiedra\",\r\n  \"address\": \"Calle siempre viva 123\",\r\n  \"admission_date\": \"2024-03-28\"\r\n}\r\n\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -212,7 +212,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/patients/1",
+							"raw": "http://localhost:8080/patients/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -220,7 +220,7 @@
 							"port": "8080",
 							"path": [
 								"patients",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -253,7 +253,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"ID\": null,\r\n    \"license\": \"AA\",\r\n    \"name\": \"Tony\",\r\n    \"last_name\": \"Scorcese\"\r\n}",
+							"raw": "{\r\n  \"dni\": 12345678,\r\n  \"name\": \"Pedro\",\r\n  \"last_name\": \"PicaPiedra\",\r\n  \"address\": \"Calle siempre viva 1\",\r\n  \"admission_date\": \"2024-03-28\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -261,7 +261,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/patients/3",
+							"raw": "http://localhost:8080/patients/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -269,7 +269,7 @@
 							"port": "8080",
 							"path": [
 								"patients",
-								"3"
+								"1"
 							]
 						}
 					},
@@ -282,7 +282,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"dni\": 12345678,\r\n  \"name\": \"Pedro\",\r\n  \"last_name\": \"PicaPiedra\",\r\n  \"address\": \"Calle siempre viva 123\",\r\n  \"admission_date\": \"2024-03-28\"\r\n}\r\n",
+							"raw": "{\r\n  \"dni\": 12345678,\r\n  \"name\": \"Pedro\",\r\n  \"last_name\": \"PicaPiedra\",\r\n  \"address\": \"Calle siempre viva 55\",\r\n  \"admission_date\": \"2024-03-28\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -290,15 +290,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/dentists/4",
+							"raw": "http://localhost:8080/patients/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"dentists",
-								"4"
+								"patients",
+								"2"
 							]
 						}
 					},
@@ -412,7 +412,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"shift_date\": \"2023-02-02\",\r\n    \"shift_hour\": \"23:12\",\r\n    \"id_patient\": 1,\r\n    \"id_dentist\": 3\r\n}",
+							"raw": "{\r\n    \"shift_date\": \"2023-02-02\",\r\n    \"shift_hour\": \"23:12\",\r\n    \"id_patient\": 1,\r\n    \"id_dentist\": 4\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -420,7 +420,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/shifts/6",
+							"raw": "http://localhost:8080/shifts/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -428,7 +428,7 @@
 							"port": "8080",
 							"path": [
 								"shifts",
-								"6"
+								"1"
 							]
 						}
 					},
@@ -440,7 +440,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/shifts/6",
+							"raw": "http://localhost:8080/shifts/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -448,7 +448,7 @@
 							"port": "8080",
 							"path": [
 								"shifts",
-								"6"
+								"2"
 							]
 						}
 					},
