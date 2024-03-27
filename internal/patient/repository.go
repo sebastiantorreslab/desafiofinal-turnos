@@ -8,9 +8,9 @@ import (
 type IPatientRepository interface {
 	GetById(id int) (domain.Patient, error)
 	GetAll() ([]domain.Patient, error)
-	Update(dentist domain.Patient, id int) error
+	Update(patient domain.Patient, id int) error
 	Delete(id int) error
-	Create(dentist domain.Patient) (domain.Patient, error)
+	Create(patient domain.Patient) (domain.Patient, error)
 }
 
 type patientRepository struct {
@@ -52,12 +52,7 @@ func (r *patientRepository) GetById(id int) (domain.Patient, error) {
 }
 
 func (r *patientRepository) Update(patient domain.Patient, id int) error {
-
-	patient, err := r.storage.GetByIdPatient(id)
-	if err != nil {
-		return err
-	}
-	err = r.storage.UpdatePatient(patient, id)
+	err := r.storage.UpdatePatient(patient, id)
 	if err != nil {
 		return err
 	}
