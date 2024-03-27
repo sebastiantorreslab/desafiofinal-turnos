@@ -2,6 +2,7 @@ package handler
 
 import (
 	"errors"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -67,7 +68,7 @@ func (h *ShiftHandler) Create() gin.HandlerFunc {
 
 		s, err := h.s.Create(req)
 		if err != nil {
-			web.Failure(c, 400, errors.New("Invalid creation of shift"))
+			log.Fatal(err)
 			return
 
 		}
