@@ -1,6 +1,8 @@
 package shift
 
 import (
+	"log"
+
 	"github.com/sebastiantorreslab/desafiofinal-turnos/internal/domain"
 )
 
@@ -41,7 +43,29 @@ func (s *shiftService) GetAll() ([]domain.Shift, error) {
 }
 func (s *shiftService) Update(shift domain.Shift, id int) error {
 
-	err := s.r.Update(shift, id)
+	currentShift, err := s.r.GetById(id)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if shift.ShiftDate != "" {
+		currentShift.ShiftDate = shift.ShiftDate
+
+	}
+	if shift.ShiftHour != "" {
+		currentShift.ShiftHour = shift.ShiftHour
+
+	}
+	if shift.IdPatient != 0 {
+		currentShift.IdPatient = shift.IdPatient
+
+	}
+	if shift.IdDentist != 0 {
+		currentShift.IdDentist = shift.IdDentist
+
+	}
+
+	err = s.r.Update(currentShift, id)
 	if err != nil {
 		return err
 	}

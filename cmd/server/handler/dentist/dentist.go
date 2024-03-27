@@ -82,6 +82,7 @@ func (h *dentistHandler) Update() gin.HandlerFunc {
 
 		var req domain.Dentist
 		err := c.Bind(&req)
+		
 		if err != nil {
 			web.Failure(c, 400, errors.New("Bad request"))
 			return

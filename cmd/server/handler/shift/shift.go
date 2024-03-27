@@ -145,10 +145,10 @@ func (h *ShiftHandler) UpdateByField() gin.HandlerFunc {
 			return
 		}
 		update := domain.Shift{
-			IdPatient: req.IdPatient,
-			IdDentist: req.IdDentist,
 			ShiftHour: req.ShiftHour,
 			ShiftDate: req.ShiftDate,
+			IdPatient: req.IdPatient,
+			IdDentist: req.IdDentist,
 		}
 
 		err = h.s.Update(update, id)

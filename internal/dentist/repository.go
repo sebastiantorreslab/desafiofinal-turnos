@@ -1,6 +1,8 @@
 package dentist
 
 import (
+	"log"
+
 	"github.com/sebastiantorreslab/desafiofinal-turnos/internal/domain"
 	"github.com/sebastiantorreslab/desafiofinal-turnos/pkg/store"
 )
@@ -42,13 +44,9 @@ func (r *dentistrepository) GetById(id int) (domain.Dentist, error) {
 
 func (r *dentistrepository) Update(dentist domain.Dentist, id int) error {
 
-	dentist, err := r.storage.GetById(id)
+	err := r.storage.Update(dentist, id)
 	if err != nil {
-		return err
-	}
-	err = r.storage.Update(dentist, id)
-	if err != nil {
-		return err
+		log.Fatal(err)
 	}
 	return nil
 }

@@ -1,6 +1,8 @@
 package dentist
 
 import (
+	"log"
+
 	"github.com/sebastiantorreslab/desafiofinal-turnos/internal/domain"
 )
 
@@ -52,42 +54,47 @@ func (s *denstistService) GetById(id int) (domain.Dentist, error) {
 
 func (s *denstistService) Update(dentist domain.Dentist, id int) (domain.Dentist, error) {
 
-	d, err := s.r.GetById(id)
+	currentDentist, err := s.r.GetById(id)
 	if err != nil {
 		return domain.Dentist{}, err
 	}
 	if dentist.License != "" {
-		d.License = dentist.License
+		currentDentist.License = dentist.License
 	}
 	if dentist.Name != "" {
-		d.Name = dentist.Name
+		currentDentist.Name = dentist.Name
 	}
 	if dentist.LastName != "" {
-		d.LastName = dentist.LastName
+		currentDentist.LastName = dentist.LastName
 	}
 
-	err = s.r.Update(d, id)
+	err = s.r.Update(currentDentist, id)
 	if err != nil {
 		return domain.Dentist{}, err
 	}
 
-	return d, nil
+	return currentDentist, nil
 
 }
 func (s *denstistService) UpdateByField(dentist domain.Dentist, id int) error {
 
-	d, err := s.r.GetById(id)
+	currentDentist, err := s.r.GetById(id)
 	if err != nil {
 		return err
 	}
 	if dentist.License != "" {
-		d.License = dentist.License
+		currentDentist.License = dentist.License
 	}
 	if dentist.Name != "" {
-		d.Name = dentist.Name
+		currentDentist.Name = dentist.Name
 	}
 	if dentist.LastName != "" {
-		d.LastName = dentist.LastName
+		currentDentist.LastName = dentist.LastName
+	}
+
+	err := s.r.Update(currentDentist, id)
+	if err != nil {
+		log.Fatal(err)
 	}
 	return nil
 
