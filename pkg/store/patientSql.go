@@ -78,3 +78,25 @@ func (s *sqlStorePatient) GetAllPatient() ([]domain.Patient, error) {
 
 	return patients, nil
 }
+
+func (s *sqlStorePatient) UpdatePatient(patient domain.Patient, id int) error {
+
+	query := "UPDATE patients SET dni = ?, name = ? , last_name = ?, address = ?, admission_date = ? WHERE id=?;"
+
+	stmt, err := s.db.Prepare(query)
+	if err != nil {
+		return err
+	}
+
+	res, err := stmt.Exec(patient.DNI, patient.Name, patient.LastName, patient.Address, patient.AdmissionDate, id)
+	if err != nil {
+		return err
+	}
+
+	_, err = res.RowsAffected()
+	if err != nil {
+		return err
+	}
+	return nil
+
+}
