@@ -25,7 +25,7 @@ func NewDentistRepository(storage store.StoreDentistInterface) IDentistRepositor
 
 func (r *dentistrepository) GetAll() ([]domain.Dentist, error) {
 
-	dentists, err := r.storage.GetAll()
+	dentists, err := r.storage.GetAllDentists()
 	if err != nil {
 		return nil, err
 	}

@@ -2,6 +2,7 @@ package store
 
 import (
 	"database/sql"
+	"log"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/sebastiantorreslab/desafiofinal-turnos/internal/domain"
@@ -73,6 +74,7 @@ func (s *sqlStorePatient) GetAllPatient() ([]domain.Patient, error) {
 		patients = append(patients, d)
 	}
 	if err := rows.Err(); err != nil {
+		log.Fatal(err)
 
 	}
 

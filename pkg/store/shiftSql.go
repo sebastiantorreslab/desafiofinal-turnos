@@ -32,9 +32,9 @@ func (s *sqlShiftStore) GetById(id int) (domain.Shift, error) {
 	return domain.Shift{}, nil
 
 }
-func (s *sqlShiftStore) GetAll() ([]domain.Shift, error) {
+func (s *sqlShiftStore) GetAllShifts() ([]domain.Shift, error) {
 
-	query := "SELECT * FROM `clinic-db`.shift"
+	query := "SELECT * FROM shift"
 	rows, err := s.db.Query(query)
 	if err != nil {
 		return nil, err

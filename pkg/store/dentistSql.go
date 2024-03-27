@@ -2,6 +2,7 @@ package store
 
 import (
 	"database/sql"
+	"log"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/sebastiantorreslab/desafiofinal-turnos/internal/domain"
@@ -18,9 +19,9 @@ func NewSqlDentistStore(db *sql.DB) StoreDentistInterface {
 
 }
 
-func (s *sqlDentistStore) GetAll() ([]domain.Dentist, error) {
+func (s *sqlDentistStore) GetAllDentists() ([]domain.Dentist, error) {
 
-	query := "SELECT * FROM `clinic-db`.dentists"
+	query := "SELECT * FROM dentists"
 	rows, err := s.db.Query(query)
 	if err != nil {
 		return nil, err
@@ -39,6 +40,7 @@ func (s *sqlDentistStore) GetAll() ([]domain.Dentist, error) {
 		dentists = append(dentists, d)
 	}
 	if err := rows.Err(); err != nil {
+		log.Fatal(err)
 
 	}
 

@@ -50,11 +50,12 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `clinic-db`.`shift`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `clinic-db`.`shift` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `shift_date` VARCHAR(45) NOT NULL,
   `shift_hour` VARCHAR(45) NOT NULL,
   `id_patient` INT(11) NULL DEFAULT NULL,
   `id_dentist` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
   INDEX `id_patient_idx` (`id_patient` ASC) ,
   INDEX `id_dentist_idx` (`id_dentist` ASC),
   CONSTRAINT `id_dentist`

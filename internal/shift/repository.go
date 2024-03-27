@@ -33,7 +33,7 @@ func (r *shiftrepository) GetById(id int) (domain.Shift, error) {
 }
 func (r *shiftrepository) GetAll() ([]domain.Shift, error) {
 
-	shifts, err := r.storage.GetAll()
+	shifts, err := r.storage.GetAllShifts()
 	if err != nil {
 		return []domain.Shift{}, err
 	}
