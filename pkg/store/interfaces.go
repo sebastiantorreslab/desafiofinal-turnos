@@ -19,3 +19,11 @@ type StorePatientInterface interface {
 	Delete(id int) error
 	Create(patient domain.Patient) (domain.Patient, error)
 }
+
+type StoreShiftInterface interface {
+	GetById(id int) (domain.Shift, error)
+	GetAll() ([]domain.Shift, error)
+	Update(shift domain.Shift, id int) error
+	Delete(id int) error
+	Create(shift domain.Shift) (domain.Shift, error)
+}

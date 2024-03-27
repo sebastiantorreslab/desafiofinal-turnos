@@ -19,7 +19,7 @@ func main() {
 
 	defer db.Close()
 
-	storage := store.NewSqlStore(db)
+	storage := store.NewSqlDentistStore(db)
 	repository := dentist.NewRepository(storage)
 	service := dentist.NewService(repository)
 	dentistHandler := handlerDentist.NewDentistHandler(service)
@@ -39,10 +39,6 @@ func main() {
 		dentists.DELETE(":id", dentistHandler.Delete())
 
 	}
-
-
-
-
 
 	server.Run(":8080")
 }
