@@ -36,3 +36,19 @@ func (s *sqlStorePatient) CreatePatient(patient domain.Patient) (domain.Patient,
 
 	return patient, err
 }
+
+func (s *sqlStorePatient) GetByIdPatient(id int) (domain.Patient, error) {
+
+	var patient domain.Patient
+	query := "SELECT * FROM patients WHERE id=?;"
+
+	stmt := s.db.QueryRow(query, id)
+
+	err := stmt.Scan(&patient.ID, &patient.DNI, &patient.Name, &patient.LastName, &patient.Address, &patient.AdmissionDate)
+	if err != nil {
+		return domain.Patient{}, err
+	}
+
+	return patient, nil
+
+}
