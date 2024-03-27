@@ -11,7 +11,7 @@ type sqlStorePatient struct {
 	db *sql.DB
 }
 
-func newSqlStorePatient(db *sql.DB) StorePatientInterface {
+func NewSqlStorePatient(db *sql.DB) StorePatientInterface {
 	return &sqlStorePatient{
 		db: db,
 	}

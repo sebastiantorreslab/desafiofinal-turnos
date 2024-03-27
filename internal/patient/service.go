@@ -69,7 +69,7 @@ func (s *patientService) Update(patient domain.Patient, id int) (domain.Patient,
 	if patient.Address != "" {
 		currentPatient.Address = patient.Address
 	}
-	if !patient.AdmissionDate.IsZero() {
+	if patient.AdmissionDate != "" {
 		currentPatient.AdmissionDate = patient.AdmissionDate
 	}
 
@@ -99,7 +99,7 @@ func (s *patientService) UpdateByField(patient domain.Patient, id int) error {
 	if patient.Address != "" {
 		d.Address = patient.Address
 	}
-	if !patient.AdmissionDate.IsZero() {
+	if patient.AdmissionDate != "" {
 		d.AdmissionDate = patient.AdmissionDate
 	}
 

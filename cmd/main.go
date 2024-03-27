@@ -6,7 +6,9 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 	handlerDentist "github.com/sebastiantorreslab/desafiofinal-turnos/cmd/server/handler/dentist"
+	handlerPatient "github.com/sebastiantorreslab/desafiofinal-turnos/cmd/server/handler/patient"
 	"github.com/sebastiantorreslab/desafiofinal-turnos/internal/dentist"
+	"github.com/sebastiantorreslab/desafiofinal-turnos/internal/patient"
 	"github.com/sebastiantorreslab/desafiofinal-turnos/pkg/store"
 )
 
@@ -24,6 +26,11 @@ func main() {
 	service := dentist.NewService(repository)
 	dentistHandler := handlerDentist.NewDentistHandler(service)
 
+	storagePatient := store.NewSqlStorePatient(db)
+	repositoryPatient := patient.NewPatientRepository(storagePatient)
+	servicePatient := patient.NewService(repositoryPatient)
+	patientHandler := handlerPatient.NewPatientHandler(servicePatient)
+
 	server := gin.Default()
 
 	server.GET("/ping", func(c *gin.Context) { c.String(200, "server OK") })
@@ -40,9 +47,16 @@ func main() {
 
 	}
 
-
-
-
+	// Rutas para pacientes
+	patients := server.Group("/patients")
+	{
+		patients.GET("", patientHandler.GetAll())
+		patients.GET(":id", patientHandler.GetById())
+		patients.POST("", patientHandler.Create())
+		patients.PUT(":id", patientHandler.Update())
+		patients.PATCH(":id", patientHandler.UpdateByField())
+		patients.DELETE(":id", patientHandler.Delete())
+	}
 
 	server.Run(":8080")
 }
