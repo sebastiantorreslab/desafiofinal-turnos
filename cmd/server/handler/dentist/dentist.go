@@ -115,16 +115,6 @@ func (h *dentistHandler) UpdateByField() gin.HandlerFunc {
 	}
 	return func(c *gin.Context) {
 
-		/*token := c.GetHeader("TOKEN")
-		if token == "" {
-			web.Failure(c, 401, errors.New("token not found"))
-			return
-		}
-		if token != os.Getenv("TOKEN") {
-			web.Failure(c, 401, errors.New("invalid token"))
-			return
-		}*/
-
 		var req Request
 		id, err := strconv.Atoi(c.Param("id"))
 		if err != nil {
