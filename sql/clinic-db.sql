@@ -55,8 +55,8 @@ CREATE TABLE IF NOT EXISTS `clinic-db`.`shift` (
   `shift_hour` VARCHAR(45) NOT NULL,
   `id_patient` INT(11) NULL DEFAULT NULL,
   `id_dentist` INT(11) NULL DEFAULT NULL,
-  INDEX `id_patient_idx` (`id_patient` ASC) VISIBLE,
-  INDEX `id_dentist_idx` (`id_dentist` ASC) VISIBLE,
+  INDEX `id_patient_idx` (`id_patient` ASC) ,
+  INDEX `id_dentist_idx` (`id_dentist` ASC),
   CONSTRAINT `id_dentist`
     FOREIGN KEY (`id_dentist`)
     REFERENCES `clinic-db`.`dentists` (`id`)

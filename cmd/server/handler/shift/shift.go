@@ -90,7 +90,6 @@ func (h *ShiftHandler) Update() gin.HandlerFunc {
 		}
 
 		id, err := strconv.Atoi(c.Param("id"))
-
 		if err != nil {
 			web.Failure(c, 404, errors.New("Invalid param"))
 			return

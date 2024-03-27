@@ -45,7 +45,7 @@ func (s *sqlShiftStore) GetAll() ([]domain.Shift, error) {
 
 	for rows.Next() {
 		var shift domain.Shift
-		err := rows.Scan(&shift.ID, &shift.IdPatient, &shift.IdDentist, &shift.ShiftHour, &shift.ShiftDate)
+		err := rows.Scan(&shift.ID, &shift.ShiftDate, &shift.ShiftHour, &shift.IdPatient, &shift.IdDentist)
 		if err != nil {
 			return nil, err
 
