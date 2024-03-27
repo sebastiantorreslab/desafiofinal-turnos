@@ -14,10 +14,10 @@ type IDentistRepository interface {
 }
 
 type dentistrepository struct {
-	storage store.StoreInterface
+	storage store.StoreDentistInterface
 }
 
-func NewRepository(storage store.StoreInterface) IDentistRepository {
+func NewRepository(storage store.StoreDentistInterface) IDentistRepository {
 	return &dentistrepository{storage}
 }
 

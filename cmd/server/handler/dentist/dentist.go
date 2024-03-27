@@ -3,7 +3,6 @@ package handler
 import (
 	"errors"
 	"net/http"
-	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -83,7 +82,6 @@ func (h *dentistHandler) Update() gin.HandlerFunc {
 
 		var req domain.Dentist
 		err := c.Bind(&req)
-
 		if err != nil {
 			web.Failure(c, 400, errors.New("Bad request"))
 			return
@@ -118,7 +116,7 @@ func (h *dentistHandler) UpdateByField() gin.HandlerFunc {
 	}
 	return func(c *gin.Context) {
 
-		token := c.GetHeader("TOKEN")
+		/*token := c.GetHeader("TOKEN")
 		if token == "" {
 			web.Failure(c, 401, errors.New("token not found"))
 			return
@@ -126,9 +124,9 @@ func (h *dentistHandler) UpdateByField() gin.HandlerFunc {
 		if token != os.Getenv("TOKEN") {
 			web.Failure(c, 401, errors.New("invalid token"))
 			return
-		}
-		var req Request
+		}*/
 
+		var req Request
 		id, err := strconv.Atoi(c.Param("id"))
 		if err != nil {
 			web.Failure(c, 400, errors.New("Invalid param"))

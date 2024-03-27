@@ -11,7 +11,7 @@ type sqlStore struct {
 	db *sql.DB
 }
 
-func NewSqlStore(db *sql.DB) StoreInterface {
+func NewSqlStore(db *sql.DB) StoreDentistInterface {
 	return &sqlStore{
 		db: db,
 	}
@@ -81,13 +81,13 @@ func (s *sqlStore) GetById(id int) (domain.Dentist, error) {
 }
 func (s *sqlStore) Update(dentist domain.Dentist, id int) error {
 
-	query := "UPDATE dentists SET licence = ?, name = ? , last_name=? WHERE id =?;"
+	query := "UPDATE dentists SET license = ?, name = ? , last_name=? WHERE id=?;"
 	stmt, err := s.db.Prepare(query)
 	if err != nil {
 		return err
 	}
 
-	res, err := stmt.Exec(dentist.License, dentist.Name, dentist.LastName)
+	res, err := stmt.Exec(dentist.License, dentist.Name, dentist.LastName, id)
 	if err != nil {
 		return err
 	}
