@@ -39,3 +39,16 @@ func (r *patientRepository) GetById(id int) (domain.Patient, error) {
 
 	return patient, nil
 }
+
+func (r *patientRepository) Update(patient domain.Patient, id int) error {
+
+	patient, err := r.storage.GetByIdPatient(id)
+	if err != nil {
+		return err
+	}
+	err = r.storage.UpdatePatient(patient, id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
