@@ -21,6 +21,14 @@ func NewPatientHandler(s patient.IPatientService) *patientHandler {
 	}
 }
 
+// @Summary Obtiene todos los pacientes
+// @Description Recupera una lista de todos los pacientes registrados en el sistema
+// @Tags patients
+// @Accept json
+// @Produce json
+// @Success 200 {array} domain.Patient "Lista de pacientes"
+// @Failure 400 {object} object "Solicitud incorrecta"
+// @Router /patients [get]
 func (h *patientHandler) GetAll() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		patients, err := h.s.GetAll()
@@ -32,6 +40,15 @@ func (h *patientHandler) GetAll() gin.HandlerFunc {
 	}
 }
 
+// @Summary Obtiene los detalles de un paciente específico
+// @Description Recupera los detalles de un paciente por su ID
+// @Tags patients
+// @Accept json
+// @Produce json
+// @Param id path int true "ID del Paciente"
+// @Success 200 {object} domain.Patient "Detalles del paciente"
+// @Failure 404 {object} object "Paciente no encontrado"
+// @Router /patients/{id} [get]
 func (h *patientHandler) GetById() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id, err := strconv.Atoi(c.Param("id"))
@@ -49,6 +66,17 @@ func (h *patientHandler) GetById() gin.HandlerFunc {
 	}
 }
 
+// @Summary Crea un nuevo paciente
+// @Description Crea un nuevo paciente con los datos proporcionados
+// @Tags patients
+// @Accept json
+// @Produce json
+// @Param patient body domain.Patient true "Datos del Paciente"
+// @Success 200 {object} domain.Patient "Paciente creado exitosamente"
+// @Failure 400 {object} object "Solicitud incorrecta"
+// @Failure 500 {object} object "Error interno del servidor"
+// @Router /patients [post]
+// @Security ApiKeyAuth
 func (h *patientHandler) Create() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var req domain.Patient
@@ -66,6 +94,18 @@ func (h *patientHandler) Create() gin.HandlerFunc {
 	}
 }
 
+// @Summary Actualiza los datos de un paciente
+// @Description Actualiza los datos de un paciente con la información proporcionada
+// @Tags patients
+// @Accept json
+// @Produce json
+// @Param id path int true "ID del Paciente"
+// @Param patient body domain.Patient true "Datos actualizados del Paciente"
+// @Success 200 {object} object "Paciente actualizado exitosamente"
+// @Failure 400 {object} object "Solicitud incorrecta"
+// @Failure 404 {object} object "Paciente no encontrado"
+// @Router /patients/{id} [put]
+// @Security ApiKeyAuth
 func (h *patientHandler) Update() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var req domain.Patient
@@ -89,6 +129,17 @@ func (h *patientHandler) Update() gin.HandlerFunc {
 	}
 }
 
+// @Summary Actualiza campos específicos de un paciente
+// @Description Actualiza uno o más campos de un paciente sin necesidad de enviar toda la información
+// @Tags patients
+// @Accept json
+// @Produce json
+// @Param id path int true "ID del Paciente"
+// @Success 200 {object} object "Paciente actualizado exitosamente"
+// @Failure 400 {object} object "Solicitud incorrecta"
+// @Failure 404 {object} object "Paciente no encontrado"
+// @Router /patients/{id}/fields [patch]
+// @Security ApiKeyAuth
 func (h *patientHandler) UpdateByField() gin.HandlerFunc {
 	type Request struct {
 		DNI           int    `json:"dni,omitempty"`
@@ -127,6 +178,15 @@ func (h *patientHandler) UpdateByField() gin.HandlerFunc {
 	}
 }
 
+// @Summary Elimina un paciente
+// @Description Elimina un paciente del sistema
+// @Tags patients
+// @Produce json
+// @Param id path int true "ID del Paciente"
+// @Success 200 {string} string "Mensaje de confirmación"
+// @Failure 404 {string} string "Paciente no encontrado"
+// @Router /patients/{id} [delete]
+// @Security ApiKeyAuth
 func (h *patientHandler) Delete() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id, err := strconv.Atoi(c.Param("id"))

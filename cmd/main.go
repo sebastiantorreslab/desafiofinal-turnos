@@ -4,6 +4,9 @@ import (
 	"log"
 
 	"github.com/joho/godotenv"
+	_ "github.com/sebastiantorreslab/desafiofinal-turnos/docs"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
@@ -16,6 +19,23 @@ import (
 	"github.com/sebastiantorreslab/desafiofinal-turnos/pkg/middleware"
 	"github.com/sebastiantorreslab/desafiofinal-turnos/pkg/store"
 )
+
+// @title Desafío integrador
+// @version 1.0
+// @description Sistema de reserva de turnos para odontologos y pacientes
+// @termsOfService
+
+// @contact.name equipo 33
+// @contact.url	https://github.com/genesismeli/Desafio2Backend3
+
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @host localhost:8080
+// @BasePath /api
+
+// @SecurityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
 
 func main() {
 
@@ -47,6 +67,8 @@ func main() {
 	shiftHandler := handlerShift.NewShiftHandler(serviceShift)
 
 	server := gin.Default()
+
+	server.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	server.GET("/ping", func(c *gin.Context) { c.String(200, "server OK") })
 
