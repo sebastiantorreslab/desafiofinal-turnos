@@ -175,13 +175,13 @@ func (h *ShiftHandler) GetByDNI() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		dni, err := strconv.Atoi(c.Query("dni"))
 		if err != nil {
-			web.Failure(c, 400, errors.New("Invalid id"))
+			web.Failure(c, 400, errors.New("Invalid dni"))
 			return
 		}
 
 		shift, err := h.s.GetByDNI(dni)
 		if err != nil {
-			web.Failure(c, 400, errors.New("Invalid"))
+			web.Failure(c, 400, errors.New("Invalid request"))
 			return
 		}
 		web.Success(c, 200, shift)
