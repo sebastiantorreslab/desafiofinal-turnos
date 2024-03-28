@@ -4,6 +4,9 @@ import (
 	"log"
 
 	"github.com/joho/godotenv"
+	_ "github.com/sebastiantorreslab/desafiofinal-turnos/docs"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
@@ -16,6 +19,23 @@ import (
 	"github.com/sebastiantorreslab/desafiofinal-turnos/pkg/middleware"
 	"github.com/sebastiantorreslab/desafiofinal-turnos/pkg/store"
 )
+
+// @title Desafío integrador Golang
+// @version 3.0
+// @description Sistema de reserva de turnos para odontologos y pacientes
+// @termsOfService
+
+// @contact.name Sebastian Torres, Sebastian Alfonso
+// @contact.url	https://github.com/sebastiantorreslab/desafiofinal-turnos/tree/main
+
+// @license.name Digital House
+// @license.url https://www.digitalhouse.com/co?utm_source=Google&utm_medium=paidsearch&utm_campaign=Clic&utm_term=Institucional&utm_content=institucional-institucional-branding-home-adresponsive-awareness-brandkws-none-exactas-adtext-none-exactas-ad1-latam-search&gad_source=1&gclid=CjwKCAjwh4-wBhB3EiwAeJsppJ2OfeYOwheVflmB-kJD2ctgZIZwplWV89rVP21dChHQdJtreVHUZRoCzOsQAvD_BwE
+// @host localhost:8080
+// @BasePath /api
+
+// @SecurityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
 
 func main() {
 
@@ -47,6 +67,8 @@ func main() {
 	shiftHandler := handlerShift.NewShiftHandler(serviceShift)
 
 	server := gin.Default()
+
+	server.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	server.GET("/ping", func(c *gin.Context) { c.String(200, "server OK") })
 
