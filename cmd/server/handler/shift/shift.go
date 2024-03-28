@@ -142,23 +142,14 @@ func (h *ShiftHandler) Update() gin.HandlerFunc {
 }
 func (h *ShiftHandler) UpdateByField() gin.HandlerFunc {
 	type Request struct {
-		ID        int    `json:"ID"`
-		ShiftDate string `json:"shift_date" binding:"required,omitempty"`
-		ShiftHour string `json:"shift_hour" binding:"required,omitempty"`
-		IdPatient int    `json:"id_patient" binding:"required,omitempty"`
-		IdDentist int    `json:"id_dentist" binding:"required,omitempty"`
+		ID         int    `json:"ID"`
+		ShiftDate  string `json:"shift_date" binding:"required,omitempty"`
+		ShiftHour  string `json:"shift_hour" binding:"required,omitempty"`
+		IdPatient  int    `json:"id_patient" binding:"required,omitempty"`
+		IdDentist  int    `json:"id_dentist" binding:"required,omitempty"`
+		PatientDNI int    `json:"patient_DNI" binding:"required,omitempty"`
 	}
 	return func(c *gin.Context) {
-
-		/*token := c.GetHeader("TOKEN")
-		if token == "" {
-			web.Failure(c, 401, errors.New("token not found"))
-			return
-		}
-		if token != os.Getenv("TOKEN") {
-			web.Failure(c, 401, errors.New("invalid token"))
-			return
-		}*/
 
 		var req Request
 		id, err := strconv.Atoi(c.Param("id"))
@@ -172,10 +163,11 @@ func (h *ShiftHandler) UpdateByField() gin.HandlerFunc {
 			return
 		}
 		update := domain.Shift{
-			ShiftDate: req.ShiftDate,
-			ShiftHour: req.ShiftHour,
-			IdPatient: req.IdPatient,
-			IdDentist: req.IdDentist,
+			ShiftDate:  req.ShiftDate,
+			ShiftHour:  req.ShiftHour,
+			IdPatient:  req.IdPatient,
+			IdDentist:  req.IdDentist,
+			PatientDNI: req.PatientDNI,
 		}
 
 		s, err := h.s.Update(update, id)
@@ -219,4 +211,23 @@ func (h *ShiftHandler) Delete() gin.HandlerFunc {
 		})
 
 	}
+}
+
+func (h *ShiftHandler) GetByDNI() gin.HandlerFunc {
+
+	return func(c *gin.Context) {
+		dni, err := strconv.Atoi(c.Query("dni"))
+		if err != nil {
+			web.Failure(c, 400, errors.New("Invalid dni"))
+			return
+		}
+
+		shift, err := h.s.GetByDNI(dni)
+		if err != nil {
+			web.Failure(c, 400, errors.New("Invalid request"))
+			return
+		}
+		web.Success(c, 200, shift)
+	}
+
 }

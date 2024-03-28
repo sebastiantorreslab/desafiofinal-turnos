@@ -7,6 +7,7 @@ import (
 
 type IShiftRepository interface {
 	GetById(id int) (domain.Shift, error)
+	GetByDNI(dni int) (domain.Shift, error)
 	GetAll() ([]domain.Shift, error)
 	Update(shift domain.Shift, id int) error
 	Delete(id int) error
@@ -65,6 +66,17 @@ func (r *shiftrepository) Delete(id int) error {
 func (r *shiftrepository) Create(shift domain.Shift) (domain.Shift, error) {
 
 	shift, err := r.storage.Create(shift)
+	if err != nil {
+		return domain.Shift{}, err
+	}
+
+	return shift, nil
+
+}
+
+func (r *shiftrepository) GetByDNI(dni int) (domain.Shift, error) {
+
+	shift, err := r.storage.GetByDNI(dni)
 	if err != nil {
 		return domain.Shift{}, err
 	}

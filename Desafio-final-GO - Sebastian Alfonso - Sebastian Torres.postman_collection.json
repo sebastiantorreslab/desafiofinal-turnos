@@ -32,10 +32,16 @@
 					"name": "createDentist",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "TOKEN",
+								"value": "systemturnos123456",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"ID\": null,\r\n    \"license\": \"AAAS\",\r\n    \"name\": \"carmine\",\r\n    \"last_name\": \"persico\"\r\n}",
+							"raw": "{\r\n    \"ID\": null,\r\n    \"license\": \"SS\",\r\n    \"name\": \"Gerald\",\r\n    \"last_name\": \"Ford\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -62,7 +68,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/dentists/4",
+							"raw": "http://localhost:8080/dentists/5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -70,7 +76,7 @@
 							"port": "8080",
 							"path": [
 								"dentists",
-								"4"
+								"5"
 							]
 						}
 					},
@@ -80,10 +86,16 @@
 					"name": "updateDentist",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "TOKEN",
+								"value": "systemturnos123456",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"ID\": null,\r\n    \"license\": \"AA\",\r\n    \"name\": \"Tony\",\r\n    \"last_name\": \"soprano\"\r\n}",
+							"raw": "{\r\n    \"ID\": null,\r\n    \"license\": \"SS\",\r\n    \"name\": \"Tony\",\r\n    \"last_name\": \"Sirico\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -91,7 +103,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/dentists/4",
+							"raw": "http://localhost:8080/dentists/6",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -99,7 +111,7 @@
 							"port": "8080",
 							"path": [
 								"dentists",
-								"4"
+								"6"
 							]
 						}
 					},
@@ -112,7 +124,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"ID\": null,\r\n    \"license\": \"AA\",\r\n    \"name\": \"Tony\",\r\n    \"last_name\": \"Scorcese\"\r\n}",
+							"raw": "{\r\n    \"ID\": null,\r\n    \"license\": \"AAA\",\r\n    \"name\": \"Tony\",\r\n    \"last_name\": \"Mons\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -120,7 +132,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/dentists/6",
+							"raw": "http://localhost:8080/dentists/3",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -128,7 +140,7 @@
 							"port": "8080",
 							"path": [
 								"dentists",
-								"6"
+								"3"
 							]
 						}
 					},
@@ -140,7 +152,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/dentists/6",
+							"raw": "http://localhost:8080/dentists/5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -148,7 +160,7 @@
 							"port": "8080",
 							"path": [
 								"dentists",
-								"6"
+								"5"
 							]
 						}
 					},
@@ -163,7 +175,13 @@
 					"name": "createPatient",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "TOKEN",
+								"value": "systemturnos123456",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n  \"dni\": 12345678,\r\n  \"name\": \"Juan\",\r\n  \"last_name\": \"PicaPiedra\",\r\n  \"address\": \"Calle siempre viva 123\",\r\n  \"admission_date\": \"2024-03-28\"\r\n}\r\n\r\n",
@@ -332,10 +350,16 @@
 					"name": "createShift",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "TOKEN",
+								"value": "systemturnos123456",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"ID\": null,\r\n    \"shift_date\": \"2024-02-02\",\r\n    \"shift_hour\": \"23:59\",\r\n    \"id_patient\": 1,\r\n    \"id_dentist\": 1\r\n\r\n}",
+							"raw": "{\r\n    \"ID\": null,\r\n    \"shift_date\": \"2024-02-02\",\r\n    \"shift_hour\": \"23:59\",\r\n    \"id_patient\": 1,\r\n    \"id_dentist\": 3,\r\n    \"patient_DNI\":12345678\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -343,7 +367,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/shifts",
+							"raw": "http://localhost:8080/shifts?dni=12345678",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -351,6 +375,12 @@
 							"port": "8080",
 							"path": [
 								"shifts"
+							],
+							"query": [
+								{
+									"key": "dni",
+									"value": "12345678"
+								}
 							]
 						}
 					},
@@ -377,13 +407,44 @@
 					"response": []
 				},
 				{
+					"name": "getShiftByDNI",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/shifts?dni=123456",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shifts"
+							],
+							"query": [
+								{
+									"key": "dni",
+									"value": "123456"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "updateShift",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "TOKEN",
+								"value": "systemturnos123456",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"shift_date\": \"2023-02-02\",\r\n    \"shift_hour\": \"23:59\",\r\n    \"id_patient\": 1,\r\n    \"id_dentist\": 5\r\n}",
+							"raw": "{\r\n    \"shift_date\": \"2023-02-02\",\r\n    \"shift_hour\": \"23:10\",\r\n    \"id_patient\": 1,\r\n    \"id_dentist\": 4,\r\n    \"patient_DNI\":12345678\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -391,7 +452,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/shifts/1",
+							"raw": "http://localhost:8080/shifts/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -399,7 +460,7 @@
 							"port": "8080",
 							"path": [
 								"shifts",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -409,10 +470,16 @@
 					"name": "updateShiftByField",
 					"request": {
 						"method": "PATCH",
-						"header": [],
+						"header": [
+							{
+								"key": "TOKEN",
+								"value": "systemturnos123456",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"shift_date\": \"2023-02-02\",\r\n    \"shift_hour\": \"23:12\",\r\n    \"id_patient\": 1,\r\n    \"id_dentist\": 4\r\n}",
+							"raw": "{\r\n    \"shift_date\": \"2023-02-02\",\r\n    \"shift_hour\": \"23:12\",\r\n    \"id_patient\": 1,\r\n    \"id_dentist\": 3,\r\n    \"patient_DNI\":12345678\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -420,7 +487,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/shifts/1",
+							"raw": "http://localhost:8080/shifts/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -428,7 +495,7 @@
 							"port": "8080",
 							"path": [
 								"shifts",
-								"1"
+								"2"
 							]
 						}
 					},

@@ -24,7 +24,7 @@ func (s *sqlShiftStore) GetById(id int) (domain.Shift, error) {
 
 	stmt := s.db.QueryRow(query, id)
 
-	err := stmt.Scan(&shift.ID, &shift.ShiftDate, &shift.ShiftHour, &shift.IdPatient, &shift.IdDentist)
+	err := stmt.Scan(&shift.ID, &shift.ShiftDate, &shift.ShiftHour, &shift.IdPatient, &shift.IdDentist, &shift.PatientDNI)
 	if err != nil {
 		return domain.Shift{}, err
 	}
@@ -45,7 +45,7 @@ func (s *sqlShiftStore) GetAllShifts() ([]domain.Shift, error) {
 
 	for rows.Next() {
 		var shift domain.Shift
-		err := rows.Scan(&shift.ID, &shift.ShiftDate, &shift.ShiftHour, &shift.IdPatient, &shift.IdDentist)
+		err := rows.Scan(&shift.ID, &shift.ShiftDate, &shift.ShiftHour, &shift.IdPatient, &shift.IdDentist, &shift.PatientDNI)
 		if err != nil {
 			return nil, err
 
@@ -61,13 +61,13 @@ func (s *sqlShiftStore) GetAllShifts() ([]domain.Shift, error) {
 }
 func (s *sqlShiftStore) Update(shift domain.Shift, id int) error {
 
-	query := "UPDATE shift SET shift_date = ?, shift_hour = ?, id_patient=?,id_dentist=? WHERE id=?;"
+	query := "UPDATE shift SET shift_date = ?, shift_hour = ?, id_patient=?,id_dentist=?, patient_DNI=? WHERE id=?;"
 	stmt, err := s.db.Prepare(query)
 	if err != nil {
 		return err
 	}
 
-	res, err := stmt.Exec(shift.ShiftDate, shift.ShiftHour, shift.IdPatient, shift.IdDentist, id)
+	res, err := stmt.Exec(shift.ShiftDate, shift.ShiftHour, shift.IdPatient, shift.IdDentist, shift.PatientDNI, id)
 	if err != nil {
 		return err
 	}
@@ -101,18 +101,34 @@ func (s *sqlShiftStore) Delete(id int) error {
 }
 func (s *sqlShiftStore) Create(shift domain.Shift) (domain.Shift, error) {
 
-	query := "INSERT INTO shift ( shift_date, shift_hour, id_patient,id_dentist) VALUES (?, ?, ?, ?)"
+	query := "INSERT INTO shift ( shift_date, shift_hour, id_patient,id_dentist,patient_DNI) VALUES (?, ?, ?, ?, ?)"
 	stmt, err := s.db.Prepare(query)
 	if err != nil {
 		return domain.Shift{}, err
 	}
 	defer stmt.Close()
 
-	res, err := stmt.Exec(shift.ShiftDate, shift.ShiftHour, shift.IdPatient, shift.IdDentist)
+	res, err := stmt.Exec(shift.ShiftDate, shift.ShiftHour, shift.IdPatient, shift.IdDentist, shift.PatientDNI)
 	if err != nil {
 		return domain.Shift{}, err
 	}
 	_, err = res.RowsAffected()
+	if err != nil {
+		return domain.Shift{}, err
+	}
+
+	return shift, nil
+
+}
+
+func (s *sqlShiftStore) GetByDNI(dni int) (domain.Shift, error) {
+
+	query := "SELECT * FROM shift WHERE patient_DNI = ?"
+
+	var shift domain.Shift
+	stmt := s.db.QueryRow(query, dni)
+
+	err := stmt.Scan(&shift.ID, &shift.ShiftDate, &shift.ShiftHour, &shift.IdPatient, &shift.IdDentist, &shift.PatientDNI)
 	if err != nil {
 		return domain.Shift{}, err
 	}
