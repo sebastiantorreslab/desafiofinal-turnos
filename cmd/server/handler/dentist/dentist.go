@@ -21,6 +21,13 @@ func NewDentistHandler(s dentist.IDentistService) *dentistHandler {
 	}
 }
 
+// @Summary Obtiene todos los dentistas
+// @Description Recupera una lista de todos los dentistas registrados
+// @Tags dentists
+// @Accept json
+// @Produce json
+// @Success 200 {array} domain.Dentist "Lista de dentistas"
+// @Router /dentists [get]
 func (h *dentistHandler) GetAll() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
@@ -33,6 +40,14 @@ func (h *dentistHandler) GetAll() gin.HandlerFunc {
 	}
 }
 
+// @Summary Obtiene un dentista por ID
+// @Description Recupera los detalles de un dentista por su ID
+// @Tags dentists
+// @Accept json
+// @Produce json
+// @Param id path int true "ID del Dentista"
+// @Success 200 {object} domain.Dentist "Detalles del dentista"
+// @Router /dentists/{id} [get]
 func (h *dentistHandler) GetById() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
@@ -52,6 +67,15 @@ func (h *dentistHandler) GetById() gin.HandlerFunc {
 
 }
 
+// @Summary Crea un nuevo dentista
+// @Description Crea un nuevo dentista con los datos proporcionados
+// @Tags dentists
+// @Accept json
+// @Produce json
+// @Param dentist body domain.Dentist true "Datos del Dentista"
+// @Success 200 {object} domain.Dentist "Dentista creado"
+// @Security ApiKeyAuth
+// @Router /dentists [post]
 func (h *dentistHandler) Create() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
@@ -76,6 +100,16 @@ func (h *dentistHandler) Create() gin.HandlerFunc {
 
 }
 
+// @Summary Actualiza los datos de un dentista
+// @Description Actualiza los datos de un dentista con la información proporcionada
+// @Tags dentists
+// @Accept json
+// @Produce json
+// @Param id path int true "ID del Dentista"
+// @Param dentist body domain.Dentist true "Datos del Dentista a actualizar"
+// @Success 200 {object} domain.Dentist "Dentista actualizado exitosamente"
+// @Security ApiKeyAuth
+// @Router /dentists/{id} [put]
 func (h *dentistHandler) Update() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -107,6 +141,16 @@ func (h *dentistHandler) Update() gin.HandlerFunc {
 	}
 
 }
+
+// @Summary Actualiza campos específicos de un dentista
+// @Description Actualiza uno o más campos específicos de un dentista
+// @Tags dentists
+// @Accept json
+// @Produce json
+// @Param id path int true "ID del Dentista"
+// @Success 200 {object} domain.Dentist "Dentista actualizado exitosamente"
+// @Security ApiKeyAuth
+// @Router /dentists/{id}/fields [patch]
 func (h *dentistHandler) UpdateByField() gin.HandlerFunc {
 	type Request struct {
 		License  string `json:"license,omitempty"`
@@ -154,6 +198,15 @@ func (h *dentistHandler) UpdateByField() gin.HandlerFunc {
 	}
 }
 
+// @Summary Elimina un dentista
+// @Description Elimina un dentista del sistema por su ID
+// @Tags dentists
+// @Accept json
+// @Produce json
+// @Param id path int true "ID del Dentista"
+// @Success 200 {object} object "Mensaje de confirmación de eliminación"
+// @Security ApiKeyAuth
+// @Router /dentists/{id} [delete]
 func (h *dentistHandler) Delete() gin.HandlerFunc {
 	return func(c *gin.Context) {
 

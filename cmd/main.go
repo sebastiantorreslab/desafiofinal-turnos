@@ -20,16 +20,16 @@ import (
 	"github.com/sebastiantorreslab/desafiofinal-turnos/pkg/store"
 )
 
-// @title Desafío integrador
-// @version 1.0
+// @title Desafío integrador Golang
+// @version 3.0
 // @description Sistema de reserva de turnos para odontologos y pacientes
 // @termsOfService
 
-// @contact.name equipo 33
-// @contact.url	https://github.com/genesismeli/Desafio2Backend3
+// @contact.name Sebastian Torres, Sebastian Alfonso
+// @contact.url	https://github.com/sebastiantorreslab/desafiofinal-turnos/tree/main
 
-// @license.name Apache 2.0
-// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @license.name Digital House
+// @license.url https://www.digitalhouse.com/co?utm_source=Google&utm_medium=paidsearch&utm_campaign=Clic&utm_term=Institucional&utm_content=institucional-institucional-branding-home-adresponsive-awareness-brandkws-none-exactas-adtext-none-exactas-ad1-latam-search&gad_source=1&gclid=CjwKCAjwh4-wBhB3EiwAeJsppJ2OfeYOwheVflmB-kJD2ctgZIZwplWV89rVP21dChHQdJtreVHUZRoCzOsQAvD_BwE
 // @host localhost:8080
 // @BasePath /api
 

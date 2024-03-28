@@ -22,6 +22,13 @@ func NewShiftHandler(s shift.IShiftService) *ShiftHandler {
 	}
 }
 
+// @Summary Obtiene todos los turnos
+// @Description Recupera una lista de todos los turnos registrados
+// @Tags shifts
+// @Accept json
+// @Produce json
+// @Success 200 {array} domain.Shift "Lista de turnos"
+// @Router /shifts [get]
 func (h *ShiftHandler) GetAll() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
@@ -34,6 +41,14 @@ func (h *ShiftHandler) GetAll() gin.HandlerFunc {
 	}
 }
 
+// @Summary Obtiene los detalles de un turno
+// @Description Recupera los detalles de un turno por su ID
+// @Tags shifts
+// @Accept json
+// @Produce json
+// @Param id path int true "ID del Turno"
+// @Success 200 {object} domain.Shift "Detalles del turno"
+// @Router /shifts/{id} [get]
 func (h *ShiftHandler) GetById() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
@@ -53,6 +68,15 @@ func (h *ShiftHandler) GetById() gin.HandlerFunc {
 
 }
 
+// @Summary Crea un nuevo turno
+// @Description Crea un nuevo turno con los datos proporcionados
+// @Tags shifts
+// @Accept json
+// @Produce json
+// @Param shift body domain.Shift true "Datos del Turno"
+// @Success 200 {object} domain.Shift "Turno creado"
+// @Security ApiKeyAuth
+// @Router /shifts [post]
 func (h *ShiftHandler) Create() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
@@ -77,6 +101,16 @@ func (h *ShiftHandler) Create() gin.HandlerFunc {
 
 }
 
+// @Summary Actualiza los datos de un turno
+// @Description Actualiza los datos de un turno con la información proporcionada
+// @Tags shifts
+// @Accept json
+// @Produce json
+// @Param id path int true "ID del Turno"
+// @Param shift body domain.Shift true "Datos actualizados del Turno"
+// @Success 200 {object} domain.Shift "Turno actualizado exitosamente"
+// @Security ApiKeyAuth
+// @Router /shifts/{id} [put]
 func (h *ShiftHandler) Update() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -156,6 +190,15 @@ func (h *ShiftHandler) UpdateByField() gin.HandlerFunc {
 	}
 }
 
+// @Summary Elimina un turno
+// @Description Elimina un turno del sistema por su ID
+// @Tags shifts
+// @Accept json
+// @Produce json
+// @Param id path int true "ID del Turno"
+// @Success 200 {object} object "Mensaje de confirmación de eliminación"
+// @Security ApiKeyAuth
+// @Router /shifts/{id} [delete]
 func (h *ShiftHandler) Delete() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
