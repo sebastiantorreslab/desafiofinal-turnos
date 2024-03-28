@@ -1,0 +1,488 @@
+basePath: /api
+definitions:
+  domain.Dentist:
+    properties:
+      ID:
+        type: integer
+      last_name:
+        type: string
+      license:
+        type: string
+      name:
+        type: string
+    required:
+    - last_name
+    - license
+    - name
+    type: object
+  domain.Patient:
+    properties:
+      DNI:
+        type: integer
+      ID:
+        type: integer
+      address:
+        type: string
+      admission_date:
+        type: string
+      last_name:
+        type: string
+      name:
+        type: string
+    required:
+    - DNI
+    - address
+    - admission_date
+    - last_name
+    - name
+    type: object
+  domain.Shift:
+    properties:
+      ID:
+        type: integer
+      id_dentist:
+        type: integer
+      id_patient:
+        type: integer
+      shift_date:
+        type: string
+      shift_hour:
+        type: string
+    required:
+    - id_dentist
+    - id_patient
+    - shift_date
+    - shift_hour
+    type: object
+host: localhost:8080
+info:
+  contact:
+    name: Sebastian Torres, Sebastian Alfonso
+    url: https://github.com/sebastiantorreslab/desafiofinal-turnos/tree/main
+  description: Sistema de reserva de turnos para odontologos y pacientes
+  license:
+    name: Digital House
+    url: https://www.digitalhouse.com/co?utm_source=Google&utm_medium=paidsearch&utm_campaign=Clic&utm_term=Institucional&utm_content=institucional-institucional-branding-home-adresponsive-awareness-brandkws-none-exactas-adtext-none-exactas-ad1-latam-search&gad_source=1&gclid=CjwKCAjwh4-wBhB3EiwAeJsppJ2OfeYOwheVflmB-kJD2ctgZIZwplWV89rVP21dChHQdJtreVHUZRoCzOsQAvD_BwE
+  title: Desafío integrador Golang
+  version: "3.0"
+paths:
+  /dentists:
+    get:
+      consumes:
+      - application/json
+      description: Recupera una lista de todos los dentistas registrados
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Lista de dentistas
+          schema:
+            items:
+              $ref: '#/definitions/domain.Dentist'
+            type: array
+      summary: Obtiene todos los dentistas
+      tags:
+      - dentists
+    post:
+      consumes:
+      - application/json
+      description: Crea un nuevo dentista con los datos proporcionados
+      parameters:
+      - description: Datos del Dentista
+        in: body
+        name: dentist
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Dentist'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Dentista creado
+          schema:
+            $ref: '#/definitions/domain.Dentist'
+      security:
+      - ApiKeyAuth: []
+      summary: Crea un nuevo dentista
+      tags:
+      - dentists
+  /dentists/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Elimina un dentista del sistema por su ID
+      parameters:
+      - description: ID del Dentista
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Mensaje de confirmación de eliminación
+          schema:
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Elimina un dentista
+      tags:
+      - dentists
+    get:
+      consumes:
+      - application/json
+      description: Recupera los detalles de un dentista por su ID
+      parameters:
+      - description: ID del Dentista
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Detalles del dentista
+          schema:
+            $ref: '#/definitions/domain.Dentist'
+      summary: Obtiene un dentista por ID
+      tags:
+      - dentists
+    put:
+      consumes:
+      - application/json
+      description: Actualiza los datos de un dentista con la información proporcionada
+      parameters:
+      - description: ID del Dentista
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Datos del Dentista a actualizar
+        in: body
+        name: dentist
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Dentist'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Dentista actualizado exitosamente
+          schema:
+            $ref: '#/definitions/domain.Dentist'
+      security:
+      - ApiKeyAuth: []
+      summary: Actualiza los datos de un dentista
+      tags:
+      - dentists
+  /dentists/{id}/fields:
+    patch:
+      consumes:
+      - application/json
+      description: Actualiza uno o más campos específicos de un dentista
+      parameters:
+      - description: ID del Dentista
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Dentista actualizado exitosamente
+          schema:
+            $ref: '#/definitions/domain.Dentist'
+      security:
+      - ApiKeyAuth: []
+      summary: Actualiza campos específicos de un dentista
+      tags:
+      - dentists
+  /patients:
+    get:
+      consumes:
+      - application/json
+      description: Recupera una lista de todos los pacientes registrados en el sistema
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Lista de pacientes
+          schema:
+            items:
+              $ref: '#/definitions/domain.Patient'
+            type: array
+        "400":
+          description: Solicitud incorrecta
+          schema:
+            type: object
+      summary: Obtiene todos los pacientes
+      tags:
+      - patients
+    post:
+      consumes:
+      - application/json
+      description: Crea un nuevo paciente con los datos proporcionados
+      parameters:
+      - description: Datos del Paciente
+        in: body
+        name: patient
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Patient'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Paciente creado exitosamente
+          schema:
+            $ref: '#/definitions/domain.Patient'
+        "400":
+          description: Solicitud incorrecta
+          schema:
+            type: object
+        "500":
+          description: Error interno del servidor
+          schema:
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Crea un nuevo paciente
+      tags:
+      - patients
+  /patients/{id}:
+    delete:
+      description: Elimina un paciente del sistema
+      parameters:
+      - description: ID del Paciente
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Mensaje de confirmación
+          schema:
+            type: string
+        "404":
+          description: Paciente no encontrado
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Elimina un paciente
+      tags:
+      - patients
+    get:
+      consumes:
+      - application/json
+      description: Recupera los detalles de un paciente por su ID
+      parameters:
+      - description: ID del Paciente
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Detalles del paciente
+          schema:
+            $ref: '#/definitions/domain.Patient'
+        "404":
+          description: Paciente no encontrado
+          schema:
+            type: object
+      summary: Obtiene los detalles de un paciente específico
+      tags:
+      - patients
+    put:
+      consumes:
+      - application/json
+      description: Actualiza los datos de un paciente con la información proporcionada
+      parameters:
+      - description: ID del Paciente
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Datos actualizados del Paciente
+        in: body
+        name: patient
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Patient'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Paciente actualizado exitosamente
+          schema:
+            type: object
+        "400":
+          description: Solicitud incorrecta
+          schema:
+            type: object
+        "404":
+          description: Paciente no encontrado
+          schema:
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Actualiza los datos de un paciente
+      tags:
+      - patients
+  /patients/{id}/fields:
+    patch:
+      consumes:
+      - application/json
+      description: Actualiza uno o más campos de un paciente sin necesidad de enviar
+        toda la información
+      parameters:
+      - description: ID del Paciente
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Paciente actualizado exitosamente
+          schema:
+            type: object
+        "400":
+          description: Solicitud incorrecta
+          schema:
+            type: object
+        "404":
+          description: Paciente no encontrado
+          schema:
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Actualiza campos específicos de un paciente
+      tags:
+      - patients
+  /shifts:
+    get:
+      consumes:
+      - application/json
+      description: Recupera una lista de todos los turnos registrados
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Lista de turnos
+          schema:
+            items:
+              $ref: '#/definitions/domain.Shift'
+            type: array
+      summary: Obtiene todos los turnos
+      tags:
+      - shifts
+    post:
+      consumes:
+      - application/json
+      description: Crea un nuevo turno con los datos proporcionados
+      parameters:
+      - description: Datos del Turno
+        in: body
+        name: shift
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Shift'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Turno creado
+          schema:
+            $ref: '#/definitions/domain.Shift'
+      security:
+      - ApiKeyAuth: []
+      summary: Crea un nuevo turno
+      tags:
+      - shifts
+  /shifts/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Elimina un turno del sistema por su ID
+      parameters:
+      - description: ID del Turno
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Mensaje de confirmación de eliminación
+          schema:
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Elimina un turno
+      tags:
+      - shifts
+    get:
+      consumes:
+      - application/json
+      description: Recupera los detalles de un turno por su ID
+      parameters:
+      - description: ID del Turno
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Detalles del turno
+          schema:
+            $ref: '#/definitions/domain.Shift'
+      summary: Obtiene los detalles de un turno
+      tags:
+      - shifts
+    put:
+      consumes:
+      - application/json
+      description: Actualiza los datos de un turno con la información proporcionada
+      parameters:
+      - description: ID del Turno
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Datos actualizados del Turno
+        in: body
+        name: shift
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Shift'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Turno actualizado exitosamente
+          schema:
+            $ref: '#/definitions/domain.Shift'
+      security:
+      - ApiKeyAuth: []
+      summary: Actualiza los datos de un turno
+      tags:
+      - shifts
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
